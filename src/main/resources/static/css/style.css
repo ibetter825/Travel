@@ -1,0 +1,410 @@
+body,
+div,
+section,
+header,
+footer,
+nav,
+aside,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    list-style: none;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    font-size: 62.5%;
+}
+
+html,
+body {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-font-smoothing: antialiased;
+    background: #fff;
+    /* width: 100%;
+    height: 100%; */
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+body:before {
+    background: grey;
+    position: absolute;
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    left: 50%;
+    top: 50%;
+    margin-left: -7px;
+    margin-top: -7px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-animation: loading 2s ease-out forwards infinite;
+    -moz-animation: loading 2s ease-out forwards infinite;
+    display: none;
+}
+
+body {
+    font-family: "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-size: 1.4rem;
+}
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+.logo {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 2rem;
+    color: #fff;
+    top: 60px;
+    left: 70px;
+    z-index: 1990;
+}
+
+.logo img {
+    width: 100%;
+}
+
+.wall {
+    /* width: 100%; */
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.nav {
+    width: 200px;
+    background: rgba(30, 30, 30, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.nav ul {
+    margin-top: 200px;
+}
+
+.nav li {
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 50px;
+    height: 50px;
+    padding: 0 10px;
+    cursor: pointer;
+    text-align: center;
+    letter-spacing: 1rem;
+}
+
+.nav li:hover {
+    background: rgba(250, 150, 150, 0.2);
+}
+
+.nav .iconfont {
+    font-size: 1.8rem;
+    position: relative;
+    top: 2px;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 60px;
+    right: 70px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.nav-btn .iconfont {
+    color: #fff;
+    font-size: 2rem;
+}
+
+.wall img {
+    width: 120%;
+    text-align: center;
+    position: relative;
+    left: -80px;
+    top: -80px;
+}
+
+.wall .shade {
+    height: 150%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: -50%;
+    background: rgba(50, 60, 120, 0.4);
+    transform: rotate(50deg);
+    -ms-transform: rotate(50deg);
+    -moz-transform: rotate(50deg);
+    -webkit-transform: rotate(50deg);
+    -o-transform: rotate(50deg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 100px auto;
+}
+
+.article {
+    /* width: 100%;
+    height: 420px; */
+    margin-bottom: 100px;
+    position: relative;
+}
+
+.article a {
+    color: #333333;
+}
+
+.article:last-child {
+    margin-bottom: 0;
+}
+
+.article .art-item {
+    /* height: 100%;
+    float: left; */
+    overflow: hidden;
+    position: relative;
+}
+
+.article .art-item img {
+    width: 100%;
+    display: block;
+}
+
+.article .art-item:first-child {
+    width: 680px;
+    border-radius: 10px 0 0 10px;
+    /* 动画持续时间 */
+    /* animation-duration: 2s; */
+    /* 动画延迟时间 */
+    /* animation-delay: 1s; */
+    /* 动画执行次数*/
+    /* animation-iteration-count: 1; */
+}
+
+.article .art-item:last-child {
+    width: 520px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    box-sizing: border-box;
+    border-width: 1px 1px 1px 0;
+    border-style: solid;
+    border-color: #EAEAEA;
+    padding: 20px 30px;
+    border-radius: 0 10px 10px 0;
+}
+
+.article .art-item address {
+    font-style: normal;
+    font-size: 1rem;
+}
+
+.article .art-item .art-author {
+    float: left;
+    color: #8E9CBD;
+}
+
+.article .art-item .art-date {
+    float: right;
+    color: #999999;
+}
+
+.article .art-item h1 {
+    clear: both;
+    font-size: 2rem;
+    color: #333333;
+    padding: 10px 0;
+}
+
+.article .art-item .fenge {
+    background: url(../images/fenge.jpg);
+    height: 24px;
+}
+
+.article .art-item .art-desc {
+    font-size: 1.1rem;
+    color: #626262;
+    line-height: 24px;
+}
+
+.article .art-desc:first-letter {
+    float: left;
+    font-size: 2.6rem;
+    padding: 10px;
+}
+
+.article .art-count {
+    position: absolute;
+    bottom: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 1rem;
+    color: #999999;
+}
+
+.article .art-count .iconfont {
+    font-size: 1.4rem;
+    margin: 0 6px 0 15px;
+    position: relative;
+    top: 2px;
+}
+
+.article .art-count .iconfont:first-child {
+    margin-left: 0;
+}
+
+
+/*detail*/
+
+.top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #F7F7F7;
+    background: #ECECEC;
+}
+
+.top .logo {
+    position: static;
+}
+
+.top .logo img {
+    width: 50%;
+}
+
+.detail {
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 20px;
+    margin-top: 50px;
+}
+
+.detail h1 {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #333333;
+    padding: 50px 0 20px;
+}
+
+.detail aside {
+    font-size: 1rem;
+    color: #666666;
+}
+
+.detail aside span {
+    margin: 0 10px;
+}
+
+.detail aside span:first-child {
+    margin-left: 0;
+}
+
+.detail .content {
+    padding: 50px 0;
+    color: #333333;
+    font-size: 1.2rem;
+}
+
+.detail .comment h4 {
+    margin-bottom: 20px;
+}
+
+.detail .comment header {
+    height: 100px;
+}
+
+
+/* 1280分辨率以上（大于1200px） */
+
+@media screen and (min-width:1200px) {}
+
+
+/* 1100分辨率（大于960px，小于1199px） */
+
+@media screen and (min-width: 960px) and (max-width: 1199px) {}
+
+
+/* 880分辨率（大于768px，小于959px） */
+
+@media screen and (min-width: 768px) and (max-width: 959px) {}
+
+
+/* 720分辨率（大于480px，小于767px） */
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+
+/* 440分辨率以下（小于479px） */
+
+@media only screen and (max-width: 479px) {
+    .logo {
+        width: 30px;
+        height: 30px;
+        top: 40px;
+        left: 30px;
+    }
+    .nav-btn {
+        top: 45px;
+        right: 30px;
+    }
+    .wall img {
+        width: auto;
+        height: 120%;
+    }
+    .wall .shade {
+        display: none;
+    }
+    .container {
+        max-width: 100%;
+        margin: 50px 0 0 0;
+    }
+    .article {
+        margin-bottom: 50px;
+    }
+    .article .art-item h1 {
+        font-size: 1.8rem;
+    }
+    .article .art-item:first-child {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+    }
+    .article .art-item:last-child {
+        position: relative;
+        width: 100%;
+        padding: 20px 20px 80px 20px;
+    }
+    .article .art-count {
+        bottom: 40px;
+    }
+}
