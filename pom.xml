@@ -188,7 +188,7 @@
             <!-- </dependencies> -->
         </plugin>
     </plugins>
-    <finalName>Tktick</finalName>
+    <finalName>Travel</finalName>
   </build>
   
   <!-- Add Spring repositories -->

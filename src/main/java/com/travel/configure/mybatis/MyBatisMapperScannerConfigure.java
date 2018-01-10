@@ -13,7 +13,7 @@ public class MyBatisMapperScannerConfigure {
 	public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-        mapperScannerConfigurer.setBasePackage("com.tktick.dao.*");
+        mapperScannerConfigurer.setBasePackage("com.travel.dao.*");
         Properties properties = new Properties();
         properties.setProperty("mappers", "com.travel.dao.BaseMapper");//此类的包在上面的包内
         properties.setProperty("notEmpty", "false");
