@@ -179,13 +179,13 @@
         <plugin>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
-            <!-- <dependencies> -->
+            <dependencies>
                 <!-- spring热部署-->
-                <!-- <dependency>
+                <dependency>
                     <groupId>org.springframework</groupId>
                     <artifactId>springloaded</artifactId>
-                </dependency> -->
-            <!-- </dependencies> -->
+                </dependency>
+            </dependencies>
         </plugin>
     </plugins>
     <finalName>Travel</finalName>

@@ -1,4 +1,4 @@
-package com.travel.controller.wap;
+package com.travel.controller.web;
 
 import org.springframework.web.bind.annotation.RestController;
 

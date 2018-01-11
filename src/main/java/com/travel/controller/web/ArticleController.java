@@ -1,4 +1,4 @@
-package com.travel.controller.wap;
+package com.travel.controller.web;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

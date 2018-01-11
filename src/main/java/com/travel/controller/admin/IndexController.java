@@ -1,4 +1,4 @@
-package com.travel.controller.wap;
+package com.travel.controller.admin;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,12 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @author user
  *
  */
-@RestController
-public class IndexController extends WebBaseController {
+@RestController(value = "AdminIndexController")
+public class IndexController extends AdminBaseController {
 	
-	@RequestMapping("/")
+	@RequestMapping("/index.html")
 	public ModelAndView index(){
-		return new ModelAndView("wap/index");
+		return new ModelAndView("admin/index");
 	}
 
 }
