@@ -15,7 +15,7 @@ public class IndexController extends AdminBaseController {
 	
 	@RequestMapping("/index.html")
 	public ModelAndView index(){
-		return new ModelAndView("admin/index");
+		return new ModelAndView(getView("index"));
 	}
 
 }

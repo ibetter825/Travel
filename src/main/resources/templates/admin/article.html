@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<#assign title="文章管理">
+	<#include "/admin/includes/header.html"/>
+	<style>
+		.formError-small .formErrorContent {border-color: #fff; border-radius: 0;}
+	</style>
+</head>
+
+<body class="custom">
+	<div class="page-content">
+		<div class="page-header">
+			<div class="widget-box">
+				<form id="search-form" class="form-horizontal" role="form" onsubmit="return admin.search();">
+					<div class="widget-header header-color-blue">
+						<h6><i class="icon-search"></i>搜索</h6>
+						<div class="widget-toolbar">
+							<a href="#" data-action="collapse"><i class="1 icon-chevron-up"></i></a>
+						</div>
+						<div class="widget-toolbar no-border">
+							<button class="btn btn-xs btn-info" type="submit"><i class="icon-search bigger-110"></i> 查&nbsp;询
+							</button><button class="btn btn-xs" type="reset"><i class="icon-undo bigger-110"></i> 重&nbsp;置</button>
+						</div>
+					</div>
+					<div class="widget-body">
+						<div class="widget-main">
+							<div class="form-group" id="searchCnter"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- /.page-header -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="widget-box">
+					<div class="widget-header header-color-blue">
+						<h6><i class="icon-table"></i>列表</h6>
+						<div class="widget-toolbar"><a href="#" data-action="collapse"><i class="1 icon-chevron-up"></i></a></div>
+					</div>
+					<div class="widget-body">
+						<div class="widget-toolbox">
+							<div class="btn-toolbar">
+								<div class="btn-group" id="opt-cnter">
+									<button class="btn btn-sm btn-success" onclick="add();"><i class="icon-plus"></i> 新增
+									</button><button class="btn btn-sm btn-danger" onclick=""><i class="icon-edit"></i> 编辑</button>
+								</div>
+							</div>
+						</div>
+						<div class="widget-main">
+							<table id="gridTable"></table>
+							<div id="gridPager"></div>
+						</div>
+					</div>
+				</div>
+			</div><!-- /.col -->
+		</div>
+		<!-- /row -->
+		<!-- PAGE CONTENT ENDS -->
+		<div id="dto-model" class="dto-model-hide">
+			<form id="dto-form" class="form-horizontal" role="form" onsubmit="return admin.submitDtoModelForm();">
+				<div class="widget-box no-border">
+					<div class="widget-header header-color-blue">
+						<h6><i class="icon-search"></i>表单</h6>
+					</div>
+					<div class="widget-body">
+						<div class="widget-main"></div>
+						<div class="widget-toolbox padding-8 clearfix">
+							<button type="button" class="btn btn-sm btn-danger pull-right" onclick="admin.closeDtoModel();">
+								<i class="icon-trash"></i><span class="bigger-110"> 取&nbsp;消</span>
+							</button>
+							<button type="submit" class="btn btn-sm btn-primary pull-right">
+								<i class="icon-ok"></i><span class="bigger-110"> 确&nbsp;定</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<!-- basic scripts -->
+	<#include "/admin/includes/footer.html"/>
+	<script type="text/javascript">
+	//打开文章新增页面
+	function add(){
+		
+	}
+	</script>
+</body>
+
+</html>

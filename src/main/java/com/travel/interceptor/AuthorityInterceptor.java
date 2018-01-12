@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.travel.annotation.Permission;
 import com.travel.context.SessionContextHolder;
-import com.travel.exception.TkAuthenticationException;
+import com.travel.exception.MyAuthenticationException;
 
 /**
  * 使用 AOP检查是否登录

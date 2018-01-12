@@ -67,7 +67,11 @@ public class MyBasicErrorController extends AbstractErrorController {
                 request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));
         response.setStatus(status.value());
         ModelAndView modelAndView = resolveErrorView(request, response, status, model);
-        String path = "web/error";
+        String path = (String) model.getOrDefault("path", "error");
+        if(path.contains(BaseController.VIEW_ADMIN_BASE_ROUTE))
+        	path = BaseController.VIEW_ADMIN_BASE_ROUTE + "error";
+        else
+        	path = "web/error";
         if(modelAndView == null)
         	modelAndView = new ModelAndView(path+"/"+model.get("status"), model);
         else

@@ -15,7 +15,7 @@ public class IndexController extends WebBaseController {
 	
 	@RequestMapping("/")
 	public ModelAndView index(){
-		return new ModelAndView("wap/index");
+		return new ModelAndView(getView("index"));
 	}
 
 }

@@ -7,20 +7,20 @@ import java.util.Map;
  * @author user
  *
  */
-public class TkValidationException extends RuntimeException {
+public class MyValidationException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	private Map<String, String> error; //错误信息
 	
-	public TkValidationException(String msg) {
+	public MyValidationException(String msg) {
 		super(msg);
 	}
 	
-	public TkValidationException(String msg, Throwable t) {
+	public MyValidationException(String msg, Throwable t) {
 		super(msg, t);
 	}
 	
-	public TkValidationException(String msg, Map<String, String> error) {
+	public MyValidationException(String msg, Map<String, String> error) {
 		super(msg);
 		this.error = error;
 	}

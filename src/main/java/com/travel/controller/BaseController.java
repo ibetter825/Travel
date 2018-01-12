@@ -14,6 +14,9 @@ import com.travel.context.SessionContextHolder;
 
 @RestController
 public class BaseController {
+	public static String VIEW_WEP_BASE_ROUTE = "web/";
+	public static String VIEW_ADMIN_BASE_ROUTE = "admin/";
+
 	@Autowired  
 	protected HttpServletRequest request;
 	@Autowired
@@ -69,5 +72,11 @@ public class BaseController {
 		} finally {
 			if(outer != null) outer.close();
 		}
+	}
+	/**
+	 * 获取视图字符串
+	 */
+	public String getView(String view){
+		return view;
 	}
 }

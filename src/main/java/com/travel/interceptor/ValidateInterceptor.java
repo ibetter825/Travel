@@ -14,7 +14,7 @@ import org.springframework.validation.ObjectError;
 import com.google.common.collect.Maps;
 import com.travel.annotation.Validator;
 import com.travel.bean.constant.AuthConstant;
-import com.travel.exception.TkValidationException;
+import com.travel.exception.MyValidationException;
 
 /**
  * 使用 AOP检查表单对象是否验证通过
@@ -45,6 +45,6 @@ public class ValidateInterceptor {
 				}
 			}
 		}
-        if(res != null) throw new TkValidationException(AuthConstant.FORM_VALI_FAIL_MSG, res);
+        if(res != null) throw new MyValidationException(AuthConstant.FORM_VALI_FAIL_MSG, res);
     }
 }

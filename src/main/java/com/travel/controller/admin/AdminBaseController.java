@@ -12,5 +12,9 @@ import com.travel.controller.BaseController;
 @RestController
 @RequestMapping("/admin")
 public class AdminBaseController extends BaseController {
+	@Override
+	public String getView(String view) {
+		return VIEW_ADMIN_BASE_ROUTE + view;
+	}
 	
 }

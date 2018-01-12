@@ -18,8 +18,8 @@ import com.travel.bean.constant.AuthConstant;
 import com.travel.bean.constant.WebConstant;
 import com.travel.bean.enums.ResultMessageEnum;
 import com.travel.bean.model.ResultModel;
-import com.travel.exception.TkAuthenticationException;
-import com.travel.exception.TkValidationException;
+import com.travel.exception.MyAuthenticationException;
+import com.travel.exception.MyValidationException;
 import com.travel.utils.WebUtil;
 
 /**
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
         		exceptionHandle(resp, e);
     		else{
     	        ModelAndView mav = new ModelAndView();
-    	        if(e instanceof TkAuthenticationException){
+    	        if(e instanceof MyAuthenticationException){
     	        	mav.setViewName("/web/sign");
     	        }else{
 	    	        mav.addObject("exception", e);
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
     	        return mav;
     		}
 		} finally {
-			if(!(e instanceof TkAuthenticationException))
+			if(!(e instanceof MyAuthenticationException))
 				logger.error("GlobalExceptionHandler.class", e);
 		}
         return null;
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
     
     public void exceptionHandle(HttpServletResponse resp, Exception e) throws IOException{
     	ServletOutputStream outer = null;
-    	boolean isTkValiEx = e instanceof TkValidationException;//是否是表单验证错误
+    	boolean isTkValiEx = e instanceof MyValidationException;//是否是表单验证错误
 		try {
 			ResultModel model = null;
 			resp.reset();
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
 			if(isTkValiEx){
 				resp.setStatus(HttpStatus.OK.value());
 				model = new ResultModel(e.getMessage());
-				model.getData().put(AuthConstant.FORM_VALI_FAIL_NAME, ((TkValidationException) e).getError());
+				model.getData().put(AuthConstant.FORM_VALI_FAIL_NAME, ((MyValidationException) e).getError());
 			}else{
 				resp.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 				model = new ResultModel(ResultMessageEnum.SYSTEM_EXCEPTION);
