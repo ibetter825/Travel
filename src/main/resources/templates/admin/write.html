@@ -10,26 +10,9 @@
 	<div class="page-content">
 		<div class="row">
 			<div class="col-xs-12">
-				<div class="widget-box">
-					<div class="widget-header header-color-blue">
-						<h6><i class="icon-table"></i>列表</h6>
-						<div class="widget-toolbar"><a href="#" data-action="collapse"><i class="1 icon-chevron-up"></i></a></div>
-					</div>
-					<div class="widget-body">
-						<div class="widget-toolbox">
-							<div class="btn-toolbar">
-								<div class="btn-group" id="opt-cnter">
-									<button class="btn btn-sm btn-success" onclick=""><i class="icon-plus"></i> 新增
-									</button><button class="btn btn-sm btn-danger" onclick=""><i class="icon-edit"></i> 编辑</button>
-								</div>
-							</div>
-						</div>
-						<div class="widget-main">
-							<table id="gridTable"></table>
-							<div id="gridPager"></div>
-						</div>
-					</div>
-				</div>
+				<div id="toolbar"></div>
+				<div style="padding: 5px 0; color: #ccc">中间隔离带</div>
+				<div id="editor" style="height: 500px;"></div>
 			</div><!-- /.col -->
 		</div>
 		<!-- /row -->
@@ -38,8 +21,43 @@
 	
 	<!-- basic scripts -->
 	<#include "/admin/includes/footer.html"/>
+	<script src="/admin/js/editor/wangEditor.min.js"></script>
 	<script type="text/javascript">
-
+	$(function(){
+		initEditor();
+	});
+	function initEditor(){
+		var E = window.wangEditor;
+	    var editor = new E('#toolbar', '#editor');
+	    editor.customConfig.menus = [
+		    'head',  // 标题
+		    'bold',  // 粗体
+		    'italic',  // 斜体
+		    'underline',  // 下划线
+		    'strikeThrough',  // 删除线
+		    'foreColor',  // 文字颜色
+		    'backColor',  // 背景颜色
+		    'link',  // 插入链接
+		    'list',  // 列表
+		    'justify',  // 对齐方式
+		    'quote',  // 引用
+		    'emoticon',  // 表情
+		    'image',  // 插入图片
+		    'table',  // 表格
+		    'video',  // 插入视频
+		    'undo',  // 撤销
+		    'redo'  // 重复
+	    ];
+	    // 配置服务器端地址
+		editor.customConfig.uploadImgServer = '/common/upload/editor.json';
+		//可自定义filename
+		editor.customConfig.uploadFileName = 'file';
+		editor.customConfig.customAlert = function (info) {
+		    // info 是需要提示的内容
+		    layer.msg(info);
+		}
+	    editor.create();
+	}
 	</script>
 </body>
 
