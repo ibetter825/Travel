@@ -4,15 +4,24 @@
 <head>
 	<#assign title="文章新增">
 	<#include "/admin/includes/header.html"/>
+	<style>
+	.art-header {position: fixed; width: 100%; top: 0; left: 0; z-index: 20180116; background: #fff;}
+	.art-title input {margin: 0 5%; width: 90%; height: 30px; line-height: 30px; letter-spacing: 2px; font-size: 16px; text-align: center; border-width: 0 0 1px 0;}
+	#editor {height: 500px; margin-top: 80px;}
+	</style>
 </head>
 
 <body class="custom">
 	<div class="page-content">
 		<div class="row">
 			<div class="col-xs-12">
-				<div id="toolbar"></div>
-				<div style="padding: 5px 0; color: #ccc">中间隔离带</div>
-				<div id="editor" style="height: 500px;"></div>
+				<div class="art-header">
+					<div id="toolbar"></div>
+					<h4 class="art-title">
+						<input type="text" placeholder="请输入标题"/>
+					</h4>
+				</div>
+				<div id="editor"></div>
 			</div><!-- /.col -->
 		</div>
 		<!-- /row -->
@@ -24,8 +33,15 @@
 	<script src="/admin/js/editor/wangEditor.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
+		resizeEditor();
 		initEditor();
+		$(window).resize(function(){
+			resizeEditor();
+		});
 	});
+	function resizeEditor(){
+		$('#editor').height($(window).height() - 100);
+	}
 	function initEditor(){
 		var E = window.wangEditor;
 	    var editor = new E('#toolbar', '#editor');
