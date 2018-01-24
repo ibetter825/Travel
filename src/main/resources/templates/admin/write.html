@@ -5,9 +5,12 @@
 	<#assign title="文章新增">
 	<#include "/admin/includes/header.html"/>
 	<style>
-	.art-header {position: fixed; width: 100%; top: 0; left: 0; z-index: 20180116; background: #fff;}
+	.art-header {position: fixed; width: 100%; top: 0; left: 0; z-index: 19891014; background: #fff;}
 	.art-title input {margin: 0 5%; width: 90%; height: 30px; line-height: 30px; letter-spacing: 2px; font-size: 16px; text-align: center; border-width: 0 0 1px 0;}
 	#editor {height: 500px; margin-top: 80px;}
+	#saveMenu {position: absolute; right: 5px;}
+	#saveMenu i {font-size: 18px; color: #D15B47;}
+	#saveMenu i:hover {color: #307ECC;}
 	</style>
 </head>
 
@@ -26,6 +29,28 @@
 		</div>
 		<!-- /row -->
 		<!-- PAGE CONTENT ENDS -->
+		<div id="dialog-model" class="dialog-model-hide">
+			<form id="tag-form" class="form-horizontal" role="form" onsubmit="return admin.submittagModelForm();">
+				<div class="widget-box no-border">
+					<div class="widget-header header-color-blue">
+						<h6><i class="icon-leaf"></i>选择标签</h6>
+					</div>
+					<div class="widget-body">
+						<div class="widget-main">
+							ss<br>sss<br>
+						</div>
+						<div class="widget-toolbox padding-8 clearfix">
+							<button type="button" class="btn btn-sm btn-danger pull-right" onclick="layer.closeAll('page');">
+								<i class="icon-trash"></i><span class="bigger-110"> 取&nbsp;消</span>
+							</button>
+							<button type="submit" class="btn btn-sm btn-primary pull-right">
+								<i class="icon-ok"></i><span class="bigger-110"> 确&nbsp;定</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
 	
 	<!-- basic scripts -->
@@ -44,6 +69,38 @@
 	}
 	function initEditor(){
 		var E = window.wangEditor;
+		//自定义菜单 - START
+		//自定义保存菜单
+	    E.save = {
+    		// editor create之后调用
+    		init: function(){
+    			$(".w-e-toolbar").append('<div id="saveMenu" class="w-e-menu" title="保存"><i class="icon-save"></i></div>');
+    			$('#saveMenu').click(function(){
+    				E.save.submit();
+    			});
+    		},
+    		submit: function(){
+    			$tagModel = $('#dialog-model');
+    			$tagModel.removeClass('dialog-model-hide')
+    			//首先弹出标签选择页面
+    			layer.open({
+		  		  type: 1,
+		  		  title: false,
+		  		  move: '.widget-header',
+		  		  closeBtn: 0,
+		  		  skin: 'dialog-model',
+		  		  shade: false,
+		  		  shadeClose: true,
+		  		  area: ['460px'],
+		  		  content: $tagModel,
+		  		  end: function(){
+		  			$tagModel.addClass('dialog-model-hide');
+		  		  }
+				});
+    		}
+    	};
+		//自定义菜单 - END
+		
 	    var editor = new E('#toolbar', '#editor');
 	    editor.customConfig.menus = [
 		    'head',  // 标题
@@ -66,6 +123,8 @@
 	    ];
 	    // 配置服务器端地址
 		editor.customConfig.uploadImgServer = '/common/upload/editor.json';
+		// 将图片大小限制为 20M
+		editor.customConfig.uploadImgMaxSize = 20 * 1024 * 1024
 		//可自定义filename
 		editor.customConfig.uploadFileName = 'file';
 		editor.customConfig.customAlert = function (info) {
@@ -73,6 +132,7 @@
 		    layer.msg(info);
 		}
 	    editor.create();
+	    E.save.init();//初始化菜单操作
 	}
 	</script>
 </body>
