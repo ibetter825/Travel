@@ -7,12 +7,13 @@
 	<#include "/admin/includes/header.html"/>
 	<link id="tagcss" rel="stylesheet" href="/admin/css/jquery.tag-editor.css" />
 	<style>
-	.art-header {position: fixed; width: 100%; top: 0; left: 0; z-index: 19891014; background: #fff;}
+	.art-header {position: fixed; width: 100%; top: 5px; left: 0; z-index: 19891014; background: #fff;}
 	.art-title input {margin: 0 5%; width: 90%; height: 30px; line-height: 30px; letter-spacing: 2px; font-size: 16px; text-align: center; border-width: 0 0 1px 0;}
 	#editor {height: 500px; margin-top: 80px;}
 	#saveMenu {position: absolute; right: 5px;}
 	#saveMenu i {font-size: 18px; color: #D15B47;}
 	#saveMenu i:hover {color: #307ECC;}
+	#musicMenu i {position: relative; left: -2px; top: -2px;}
 	.reco-tags .col-sm-9 {padding-top: 4px;}
 	</style>
 </head>
@@ -25,6 +26,7 @@
 					<div id="toolbar"></div>
 					<h4 class="art-title">
 						<input type="text" id="art-title" placeholder="请输入标题"/>
+						<input type="hidden" id="art-song" value=""/>
 					</h4>
 				</div>
 				<div id="editor"></div>
@@ -79,7 +81,7 @@
 				</div>
 			</form>
 		</div>
-		<div style="position: absolute; top: 0; width: 500px; height: 100px; border:1px solid red; z-index: 20189999;">
+		<div class="dialog-model-hide">
 			<audio id="audio" src="" autoplay="autoplay" controls="controls">
 			您的浏览器不支持 audio 标签。
 			</audio>
@@ -113,7 +115,7 @@
 	$.jsonp(u, function(data){
 		console.log(data);
 		//需要在顶部加上标签： <meta name="referrer" content="never"> 才能播放
-		$('#audio').attr('src', data.bitrate.file_link);
+		//$('#audio').attr('src', data.bitrate.file_link);
 	});
 	$(function(){
 		resizeEditor();
@@ -152,9 +154,9 @@
 	    	artTags.tagEditor('addTag', tag);
 	    });
 	}
+	var E = window.wangEditor;
 	//初始化编辑器
 	function initEditor(){
-		var E = window.wangEditor;
 		//自定义菜单 - START
 		//自定义保存菜单
 	    E.save = {
@@ -187,6 +189,81 @@
 		  			$tagModel.addClass('dialog-model-hide');
 		  		  }
 				});
+    		}
+    	};
+    	//自定义音乐菜单
+	    E.music = {
+    		// editor create之后调用
+    		init: function(){
+    			$(".w-e-toolbar").append('<div id="musicMenu" class="w-e-menu" title="插入音乐"><i class="icon-music"></i></div>');
+    			$('#musicMenu').click(function(e){
+    				E.music.open();
+    				e.stopPropagation();
+    			});
+    		},
+    		open: function(){
+    			var $artSong = $('#art-song');
+    			var song = $artSong.val();
+    			if(song.indexOf(':-:') > -1)
+    				song = song.split(':-:')[1];
+    			else
+    				song = '';
+    			var arr = [];
+    			arr.push('<div class="w-e-panel-container w-e-panel-music" style="width:350px; margin-left:-175px;"><i onclick="E.music.close(this);" class="w-e-icon-close w-e-panel-close"></i><ul class="w-e-panel-tab-title"><li class="w-e-item w-e-active">插入音乐</li></ul><div class="w-e-panel-tab-content"><div>');
+                arr.push('<input onKeyUp="E.music.search(this);" type="text" class="block" placeholder="搜索音乐" value="'+song+'">');
+				arr.push('<select class="form-control" style="display:none;" multiple="multiple"></select>');
+                arr.push('<div class="w-e-button-container">');
+                arr.push('<button onClick="E.music.add(this);" class="right">确定</button>');
+                arr.push('</div>');
+                arr.push('</div></div></div>');
+    			$('#editor').append(arr.join(''));
+    			$(document).unbind('click').on('click', function(){
+    				$('.w-e-panel-music').remove();
+    			});
+    			$('.w-e-panel-music').on('click', function(e){
+    				e.stopPropagation();
+    			});
+    		},
+    		search: function(input){
+    			var $input = $(input);
+    			var val = $.trim($input.val());
+    			if(/^[s　]|[ ]$/gi.test(val) || val === '')
+    				return;
+    			var lasy = $input.attr('lasy');
+    			var time = new Date().getTime();
+    			if(lasy){
+    				//超过1秒钟才查询
+    				if(time - Number(lasy) <= 1000) return;
+    			}
+    			$input.attr('lasy', time);
+    			var u = 'http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=' + val;
+				$.jsonp(u, function(data){
+					var $select = $input.siblings('select');
+					var errno = data.errno;
+					if(errno == 22001){//没有查询到数据
+						$select.slideUp();
+					}else{
+						$select.slideDown();
+						var list = data.song;
+						var songid,songname,artistname,html = [];
+						for(var i = 0, l = list.length; i < l; i++){
+							songid = list[i]['songid'];
+							songname = list[i]['songname'];
+							artistname = list[i]['artistname'];
+							html.push('<option value="'+songid+':-:'+songname+'">'+songname+' ['+artistname+']</option>');
+						}
+						$select.empty().append(html.join(''));
+					}
+				});
+    		},
+    		add: function(btn){
+    			var $artSong = $('#art-song');
+    			var $select = $(btn).parent().siblings('select');
+    			$artSong.val($select.val());
+    			E.music.close($select);
+    		},
+    		close: function(obj){
+    			$(obj).parents('.w-e-panel-container').remove();
     		}
     	};
 		//自定义菜单 - END
@@ -223,6 +300,7 @@
 		}
 	    editor.create();
 	    E.save.init();//初始化菜单操作
+	    E.music.init();//初始化音乐菜单
 	}
 	</script>
 </body>
