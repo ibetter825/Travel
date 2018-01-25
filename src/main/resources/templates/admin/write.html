@@ -227,8 +227,11 @@
     		search: function(input){
     			var $input = $(input);
     			var val = $.trim($input.val());
-    			if(/^[s　]|[ ]$/gi.test(val) || val === '')
+    			var $select = $input.siblings('select');
+    			if(/^[s　]|[ ]$/gi.test(val) || val === ''){
+    				$select.slideUp();
     				return;
+    			}
     			var lasy = $input.attr('lasy');
     			var time = new Date().getTime();
     			if(lasy){
@@ -238,7 +241,6 @@
     			$input.attr('lasy', time);
     			var u = 'http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=' + val;
 				$.jsonp(u, function(data){
-					var $select = $input.siblings('select');
 					var errno = data.errno;
 					if(errno == 22001){//没有查询到数据
 						$select.slideUp();
