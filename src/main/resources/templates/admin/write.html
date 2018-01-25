@@ -3,6 +3,7 @@
 
 <head>
 	<#assign title="文章新增">
+	<meta name="referrer" content="never">
 	<#include "/admin/includes/header.html"/>
 	<link id="tagcss" rel="stylesheet" href="/admin/css/jquery.tag-editor.css" />
 	<style>
@@ -78,6 +79,11 @@
 				</div>
 			</form>
 		</div>
+		<div style="position: absolute; top: 0; width: 500px; height: 100px; border:1px solid red; z-index: 20189999;">
+			<audio id="audio" src="" autoplay="autoplay" controls="controls">
+			您的浏览器不支持 audio 标签。
+			</audio>
+		</div>
 	</div>
 	
 	<!-- basic scripts -->
@@ -87,7 +93,28 @@
 	<script type="text/javascript">
 	//百度音乐api: 参考https://www.jianshu.com/p/a6718b11fdf1
 	//百度音乐搜索api: http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=海阔天空
-			
+	//搜听api: method=baidu.ting.song.play&songid=877578
+	jQuery.jsonp = function (url, func) {
+    	var callback = "jsonpCallback_" + new Date().getTime() + Math.floor(Math.random() * 1000000);
+        url = url + (url.indexOf( '?' ) + 1 ? '&' : '?') + 'callback=' + callback;
+	    window[callback] = function (data) {
+	        func(data);
+	        window[callback] = null;
+	    };
+	    script = document.createElement('script');
+	    script.setAttribute('src', url);
+	    document.body.appendChild(script);
+	};
+	/* var u = 'http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=海阔天空';
+	$.jsonp(u, function(data){
+		console.log(data);
+	}); */
+	var u = 'http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=877578';
+	$.jsonp(u, function(data){
+		console.log(data);
+		//需要在顶部加上标签： <meta name="referrer" content="never"> 才能播放
+		$('#audio').attr('src', data.bitrate.file_link);
+	});
 	$(function(){
 		resizeEditor();
 		initTagEditor();
