@@ -12,6 +12,7 @@
 	#saveMenu {position: absolute; right: 5px;}
 	#saveMenu i {font-size: 18px; color: #D15B47;}
 	#saveMenu i:hover {color: #307ECC;}
+	.reco-tags .col-sm-9 {padding-top: 4px;}
 	</style>
 </head>
 
@@ -22,7 +23,7 @@
 				<div class="art-header">
 					<div id="toolbar"></div>
 					<h4 class="art-title">
-						<input type="text" placeholder="请输入标题"/>
+						<input type="text" id="art-title" placeholder="请输入标题"/>
 					</h4>
 				</div>
 				<div id="editor"></div>
@@ -31,17 +32,37 @@
 		<!-- /row -->
 		<!-- PAGE CONTENT ENDS -->
 		<div id="dialog-model" class="dialog-model-hide">
-			<form id="tag-form" class="form-horizontal" role="form" onsubmit="return admin.submittagModelForm();">
+			<form id="tag-form" class="form-horizontal" role="form" onsubmit="return submitForm();">
 				<div class="widget-box no-border">
 					<div class="widget-header header-color-blue">
-						<h6><i class="icon-leaf"></i>选择标签</h6>
+						<h6><i class="icon-leaf"></i>选择标签并保存文章</h6>
 					</div>
 					<div class="widget-body">
 						<div class="widget-main">
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 标签</label>
+								<label class="col-sm-3 control-label no-padding-right" for="art-tags">标签</label>
 								<div class="col-sm-7">
 									<input type="text" id="art-tags">
+								</div>
+							</div>
+							<div class="form-group reco-tags">
+								<label class="col-sm-3 control-label no-padding-right">常用</label>
+								<div class="col-sm-9">
+									<button type="button" class="btn btn-minier btn-pink">标签1</button>
+									<button type="button" class="btn btn-minier btn-pink">标签2</button>
+									<button type="button" class="btn btn-minier btn-pink">标签3</button>
+									<button type="button" class="btn btn-minier btn-pink">标签4</button>
+									<button type="button" class="btn btn-minier btn-pink">标签5</button>
+								</div>
+							</div>
+							<div class="form-group reco-tags">
+								<label class="col-sm-3 control-label no-padding-right">热门</label>
+								<div class="col-sm-9">
+									<button type="button" class="btn btn-minier btn-primary">标签1</button>
+									<button type="button" class="btn btn-minier btn-primary">标签2</button>
+									<button type="button" class="btn btn-minier btn-primary">标签3</button>
+									<button type="button" class="btn btn-minier btn-primary">标签4</button>
+									<button type="button" class="btn btn-minier btn-primary">标签5</button>
 								</div>
 							</div>
 						</div>
@@ -64,6 +85,9 @@
 	<script src="/admin/js/editor/wangEditor.min.js"></script>
 	<script src="/admin/js/jquery.tag-editor.min.js"></script>
 	<script type="text/javascript">
+	//百度音乐api: 参考https://www.jianshu.com/p/a6718b11fdf1
+	//百度音乐搜索api: http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=海阔天空
+			
 	$(function(){
 		resizeEditor();
 		initTagEditor();
@@ -75,6 +99,15 @@
 	function resizeEditor(){
 		$('#editor').height($(window).height() - 100);
 	}
+	//提交文章
+	function submitForm(){
+		var title = $('#art-title').val();
+		var content = null;//editor.
+		var tags = $('#art-tags').val();
+		//post to server
+		return false;
+	}
+	//初始化标签
 	function initTagEditor(){
 		var artTags = $('#art-tags');
 	    artTags.tagEditor({
@@ -86,7 +119,13 @@
 	            }
 	        }
 	    });
+	    //推荐标签的点击事件
+	    $('.reco-tags').on('click', '.btn', function(){
+	    	var tag = $(this).text();
+	    	artTags.tagEditor('addTag', tag);
+	    });
 	}
+	//初始化编辑器
 	function initEditor(){
 		var E = window.wangEditor;
 		//自定义菜单 - START
