@@ -216,6 +216,11 @@
 	  			//封面
 	  			//存储的图片列表，如果封面不存在则取第一张图片
 	  			console.log($artTags.join(','));
+	  			$.post('/admin/art/save.json', {
+	  				artTitle: $artTitle
+	  			}, function(result){
+	  				console.log(result);
+	  			});
     		}
     	};
     	//自定义音乐菜单

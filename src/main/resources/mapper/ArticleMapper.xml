@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+<mapper namespace="com.tktick.dao.mapper.ArticleMapper" >
+	<sql id="baseColumnList">
+		art_id artId, art_title artTitle, art_desc artDesc, author_id authorId, add_time addTime, edit_time editTime, art_status artStatus, art_cont artCont, art_tags artTags, art_imgs artImgs, art_cover artCover, art_song artSong
+	</sql>
+    <select id="selectListByRq" parameterType="java.util.Map" resultType="java.util.Map">
+    	select id, art_title as artTitle, art_desc as artDesc, clz_id as clzId, user_id as userId, add_time as addTime, art_tag_nms as artTagNms, art_tag_ids as artTagIds, art_imgs as artImgs from article 
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+    		<if test="id != null and id != ''">
+	    		id = #{id, jdbcType=BIGINT}
+	    	</if>
+	    	<if test="artTitle != null and artTitle != ''">
+	    		art_title like concat('%', #{artTitle, jdbcType=VARCHAR}, '%')
+	    	</if>
+	    	<if test="clzId != null and clzId != ''">
+	    		clz_id = #{clzId, jdbcType=INTEGER}
+	    	</if>
+	    	<if test="userId != null and userId != ''">
+	    		and user_id = #{userId, jdbcType=INTEGER}
+	    	</if>
+	    	<if test="artState != null and artState != ''">
+	    		and art_state = #{artState, jdbcType=INTEGER}
+	    	</if>
+	    	<if test="artState == null or artState == ''">
+	    		and art_state <![CDATA[<>]]> -1
+	    	</if>
+    	</trim>
+    </select>
+    <select id="selectListByRqAndPager" resultType="java.util.Map">
+    	select id, art_title as artTitle, art_desc as artDesc, clz_id as clzId, user_id as userId, add_time as addTime, art_tag_nms as artTagNms, art_tag_ids as artTagIds, art_imgs as artImgs from article 
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+	    	<if test="rq.clzId != null and rq.clzId != ''">
+	    		clz_id = #{rq.clzId, jdbcType=INTEGER}
+	    	</if>
+	    	<if test="rq.userId != null and rq.userId != ''">
+	    		and user_id = #{rq.userId, jdbcType=INTEGER}
+	    	</if>
+	    	<if test="rq.artState != null and rq.artState != ''">
+	    		and art_state = #{rq.artState, jdbcType=INTEGER}
+	    	</if>
+	    	<if test="rq.artState == null or rq.artState == ''">
+	    		and art_state <![CDATA[<>]]> -1
+	    	</if>
+    	</trim>
+    	order by id desc
+    	limit #{pager.start, jdbcType=INTEGER}, #{pager.size, jdbcType=INTEGER}
+    </select>
+</mapper>  

@@ -1,15 +1,26 @@
 package com.travel.bean.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 文章entity
  * @author user
  *
  */
+@Entity
+@Table(name = "article")
 public class Article extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 文章id
 	 */
-	private Integer artId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long artId;
 	/**
 	 * 文章作者
 	 */
@@ -45,7 +56,7 @@ public class Article extends BaseEntity {
 	/**
 	 * 文章内容
 	 */
-	private String artContent;
+	private String artCont;
 	/**
 	 * 文章新建时间
 	 */
@@ -58,10 +69,11 @@ public class Article extends BaseEntity {
 	 * 文章软删除时间
 	 */
 	private Long delTime;
-	public Integer getArtId() {
+	
+	public Long getArtId() {
 		return artId;
 	}
-	public void setArtId(Integer artId) {
+	public void setArtId(Long artId) {
 		this.artId = artId;
 	}
 	public String getAuthorId() {
@@ -112,11 +124,11 @@ public class Article extends BaseEntity {
 	public void setArtTags(String artTags) {
 		this.artTags = artTags;
 	}
-	public String getArtContent() {
-		return artContent;
+	public String getArtCont() {
+		return artCont;
 	}
-	public void setArtContent(String artContent) {
-		this.artContent = artContent;
+	public void setArtCont(String artCont) {
+		this.artCont = artCont;
 	}
 	public Long getAddTime() {
 		return addTime;
