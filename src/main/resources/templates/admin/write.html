@@ -15,6 +15,13 @@
 	#saveMenu i:hover {color: #307ECC;}
 	#musicMenu i {position: relative; left: -2px; top: -2px;}
 	.reco-tags .col-sm-9 {padding-top: 4px;}
+	#artTags+.tag-editor { background: #fafafa; font-size: 12px; }
+	#artTags+.tag-editor .tag-editor-tag {
+	    color: #fff; background: #555;
+	    border-radius: 2px;
+	}
+	#artTags+.tag-editor .tag-editor-spacer { width: 7px; }
+	#artTags+.tag-editor .tag-editor-delete { display: none; }
 	</style>
 </head>
 
@@ -25,8 +32,8 @@
 				<div class="art-header">
 					<div id="toolbar"></div>
 					<h4 class="art-title">
-						<input type="text" id="art-title" placeholder="请输入标题"/>
-						<input type="hidden" id="art-song" value=""/>
+						<input type="text" id="artTitle" placeholder="请输入标题"/>
+						<input type="hidden" id="artSong" value=""/>
 					</h4>
 				</div>
 				<div id="editor"></div>
@@ -34,18 +41,24 @@
 		</div>
 		<!-- /row -->
 		<!-- PAGE CONTENT ENDS -->
-		<div id="dialog-model" class="dialog-model-hide">
-			<form id="tag-form" class="form-horizontal" role="form" onsubmit="return submitForm();">
+		<div id="dialogModel" class="dialog-model-hide">
+			<form id="tagForm" class="form-horizontal" role="form" onsubmit="return submitForm();">
 				<div class="widget-box no-border">
 					<div class="widget-header header-color-blue">
-						<h6><i class="icon-leaf"></i>选择标签并保存文章</h6>
+						<h6><i class="icon-leaf"></i>保存文章</h6>
 					</div>
 					<div class="widget-body">
 						<div class="widget-main">
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="art-tags">标签</label>
+								<label class="col-sm-3 control-label no-padding-right" for="artDesc">概要</label>
 								<div class="col-sm-7">
-									<input type="text" id="art-tags">
+									<textarea id="artDesc" class="autosize-transition form-control"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="artTags">标签</label>
+								<div class="col-sm-7">
+									<input type="text" id="artTags">
 								</div>
 							</div>
 							<div class="form-group reco-tags">
@@ -73,7 +86,7 @@
 							<button type="button" class="btn btn-sm btn-danger pull-right" onclick="layer.closeAll('page');">
 								<i class="icon-trash"></i><span class="bigger-110"> 取&nbsp;消</span>
 							</button>
-							<button type="submit" class="btn btn-sm btn-primary pull-right">
+							<button type="submit" class="btn btn-sm btn-primary pull-right" onclick="E.save.post();">
 								<i class="icon-ok"></i><span class="bigger-110"> 确&nbsp;定</span>
 							</button>
 						</div>
@@ -82,9 +95,7 @@
 			</form>
 		</div>
 		<div class="dialog-model-hide">
-			<audio id="audio" src="" autoplay="autoplay" controls="controls">
-			您的浏览器不支持 audio 标签。
-			</audio>
+			<audio id="audio" src="" autoplay="autoplay" controls="controls">您的浏览器不支持 audio 标签。</audio>
 		</div>
 	</div>
 	
@@ -130,17 +141,19 @@
 	}
 	//提交文章
 	function submitForm(){
-		var title = $('#art-title').val();
+		var title = $('#artTitle').val();
 		var content = null;//editor.
-		var tags = $('#art-tags').val();
+		var tags = $('#artTags').val();
 		//post to server
 		return false;
 	}
 	//初始化标签
 	function initTagEditor(){
-		var artTags = $('#art-tags');
+		var artTags = $('#artTags');
 	    artTags.tagEditor({
 	        placeholder: '添加标签...',
+	        //maxLength: 50,
+	        clickDelete: true,
 	        onChange: function(field, editor, tags) {
 	        	if(tags.length > 5){
 	        		layer.msg('不能超过5个标签!', {time:800})
@@ -157,6 +170,7 @@
 	var E = window.wangEditor;
 	//初始化编辑器
 	function initEditor(){
+		var editor = new E('#toolbar', '#editor');
 		//自定义菜单 - START
 		//自定义保存菜单
 	    E.save = {
@@ -167,8 +181,8 @@
     				E.save.submit();
     			});
     		},
-    		submit: function(){
-    			$tagModel = $('#dialog-model');
+    		submit: function(){//保存按钮
+    			$tagModel = $('#dialogModel');
     			$tagModel.removeClass('dialog-model-hide')
     			//首先弹出标签选择页面
     			layer.open({
@@ -183,12 +197,25 @@
 		  		  area: ['560px'],
 		  		  content: $tagModel,
 		  		  success: function(){
-		  			$('#layer-tag-model').removeAttr('style'); 
+		  			$('#layer-tag-model').removeAttr('style');
 		  		  },
 		  		  end: function(){
 		  			$tagModel.addClass('dialog-model-hide');
 		  		  }
 				});
+    		},
+    		post: function(){//提交数据到服务器
+    			//验证数据有效性
+	  			//保存数据到后台去
+	  			var $artTitle = $('#artTitle').val();
+	  			var $artSong = $('#artSong').val();//背景歌曲，存放id(...)
+	  			var $artContent = editor.txt.html();
+	  			//var $artContentTxt = editor.txt.text();//纯文本
+	  			var $artDesc = $('#artDesc');//概要，如果为空则取文章前200个数
+	  			var $artTags = $('#artTags').tagEditor('getTags')[0].tags;
+	  			//封面
+	  			//存储的图片列表，如果封面不存在则取第一张图片
+	  			console.log($artTags.join(','));
     		}
     	};
     	//自定义音乐菜单
@@ -202,7 +229,7 @@
     			});
     		},
     		open: function(){
-    			var $artSong = $('#art-song');
+    			var $artSong = $('#artSong');
     			var song = $artSong.val();
     			if(song.indexOf(':-:') > -1)
     				song = song.split(':-:')[1];
@@ -259,7 +286,7 @@
 				});
     		},
     		add: function(btn){
-    			var $artSong = $('#art-song');
+    			var $artSong = $('#artSong');
     			var $select = $(btn).parent().siblings('select');
     			$artSong.val($select.val());
     			E.music.close($select);
@@ -269,8 +296,6 @@
     		}
     	};
 		//自定义菜单 - END
-		
-	    var editor = new E('#toolbar', '#editor');
 	    editor.customConfig.menus = [
 		    'head',  // 标题
 		    'bold',  // 粗体
