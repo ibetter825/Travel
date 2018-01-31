@@ -23,6 +23,7 @@ public class ArticleController extends AdminBaseController {
 		System.err.println(article.getArtTitle());
 		//获取当前登录用户
 		article.setAddTime(DateUtil.getDateByTime());
+		article.setAuthorId((long) 10000);
 		articleService.save(article);
 		return new ResultModel();
 	}

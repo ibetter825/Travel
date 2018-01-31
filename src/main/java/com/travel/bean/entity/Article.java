@@ -24,7 +24,7 @@ public class Article extends BaseEntity {
 	/**
 	 * 文章作者
 	 */
-	private String authorId;
+	private Long authorId;
 	/**
 	 * 文章状态
 	 */
@@ -69,17 +69,16 @@ public class Article extends BaseEntity {
 	 * 文章软删除时间
 	 */
 	private Long delTime;
-	
 	public Long getArtId() {
 		return artId;
 	}
 	public void setArtId(Long artId) {
 		this.artId = artId;
 	}
-	public String getAuthorId() {
+	public Long getAuthorId() {
 		return authorId;
 	}
-	public void setAuthorId(String authorId) {
+	public void setAuthorId(Long authorId) {
 		this.authorId = authorId;
 	}
 	public Short getArtStatus() {
@@ -148,4 +147,5 @@ public class Article extends BaseEntity {
 	public void setDelTime(Long delTime) {
 		this.delTime = delTime;
 	}
+	
 }

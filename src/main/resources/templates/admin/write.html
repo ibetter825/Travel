@@ -17,11 +17,12 @@
 	.reco-tags .col-sm-9 {padding-top: 4px;}
 	#artTags+.tag-editor { background: #fafafa; font-size: 12px; }
 	#artTags+.tag-editor .tag-editor-tag {
-	    color: #fff; background: #555;
+	    color: #fff; background: #327FCC;
 	    border-radius: 2px;
 	}
 	#artTags+.tag-editor .tag-editor-spacer { width: 7px; }
 	#artTags+.tag-editor .tag-editor-delete { display: none; }
+	.form-group textarea {border-color: #EEEEEE;}
 	</style>
 </head>
 
@@ -209,15 +210,19 @@
 	  			//保存数据到后台去
 	  			var $artTitle = $('#artTitle').val();
 	  			var $artSong = $('#artSong').val();//背景歌曲，存放id(...)
-	  			var $artContent = editor.txt.html();
-	  			//var $artContentTxt = editor.txt.text();//纯文本
-	  			var $artDesc = $('#artDesc');//概要，如果为空则取文章前200个数
+	  			var $artCont = editor.txt.html();
+	  			//var $artContTxt = editor.txt.text();//纯文本
+	  			var $artDesc = $('#artDesc').val();//概要，如果为空则取文章前200个数
 	  			var $artTags = $('#artTags').tagEditor('getTags')[0].tags;
 	  			//封面
 	  			//存储的图片列表，如果封面不存在则取第一张图片
 	  			console.log($artTags.join(','));
 	  			$.post('/admin/art/save.json', {
-	  				artTitle: $artTitle
+	  				artTitle: $artTitle,
+	  				artSong: $artSong,
+	  				artCont: $artCont,
+	  				artDesc: $artDesc,
+	  				artTags: $artTags.join(',')
 	  			}, function(result){
 	  				console.log(result);
 	  			});
@@ -260,7 +265,7 @@
     			var $input = $(input);
     			var val = $.trim($input.val());
     			var $select = $input.siblings('select');
-    			if(/^[s　]|[ ]$/gi.test(val) || val === ''){
+    			if(/^[s　]|[ ]$/gi.test(val) || val === ''){//判断是否为空字符串
     				$select.slideUp();
     				return;
     			}

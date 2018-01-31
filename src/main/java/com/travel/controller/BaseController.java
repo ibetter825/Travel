@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.travel.bean.constant.WebConstant;
+import com.travel.bean.entity.User;
 import com.travel.context.SessionContextHolder;
 
 @RestController
@@ -26,9 +27,9 @@ public class BaseController {
 	 * 获取当前登录的用户
 	 * @return
 	 */
-	/*public TkUser getCurrentUser(){
+	public User getCurrentUser(){
 		return SessionContextHolder.getCurrentUser();
-	}*/
+	}
 	/**
 	 * 获取系统根目录
 	 * @return
