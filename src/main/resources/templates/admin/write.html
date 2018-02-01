@@ -4,6 +4,7 @@
 <head>
 	<#assign title="文章新增">
 	<meta name="referrer" content="never">
+	<link id="dropzonecss" rel="stylesheet" href="/admin/css/dropzone.css" />
 	<#include "/admin/includes/header.html"/>
 	<link id="tagcss" rel="stylesheet" href="/admin/css/jquery.tag-editor.css" />
 	<style>
@@ -15,7 +16,7 @@
 	#saveMenu i:hover {color: #307ECC;}
 	#musicMenu i {position: relative; left: -2px; top: -2px;}
 	.reco-tags .col-sm-9 {padding-top: 4px;}
-	#artTags+.tag-editor { background: #fafafa; font-size: 12px; }
+	#artTags+.tag-editor {font-size: 12px; }
 	#artTags+.tag-editor .tag-editor-tag {
 	    color: #fff; background: #327FCC;
 	    border-radius: 2px;
@@ -23,6 +24,12 @@
 	#artTags+.tag-editor .tag-editor-spacer { width: 7px; }
 	#artTags+.tag-editor .tag-editor-delete { display: none; }
 	.form-group textarea {border-color: #EEEEEE;}
+	
+	#uploadCover .dz-default {font-size: 14px;}
+	#uploadCover .dz-preview {width:100%; margin:0;}
+   	#uploadCover .dz-image {width:100%;}
+   	#uploadCover .dz-image img {margin:0 auto;}
+   	.dropzone {min-height: 150px;}
 	</style>
 </head>
 
@@ -43,13 +50,20 @@
 		<!-- /row -->
 		<!-- PAGE CONTENT ENDS -->
 		<div id="dialogModel" class="dialog-model-hide">
-			<form id="tagForm" class="form-horizontal" role="form" onsubmit="return submitForm();">
+			<form id="artForm" class="form-horizontal" role="form" onsubmit="return submitForm();">
 				<div class="widget-box no-border">
 					<div class="widget-header header-color-blue">
 						<h6><i class="icon-leaf"></i>保存文章</h6>
 					</div>
 					<div class="widget-body">
 						<div class="widget-main">
+							<div class="form-group" title="推荐封面分辨率400*800">
+								<label class="col-sm-3 control-label no-padding-right" for="artCover">封面</label>
+								<div class="col-sm-7">
+									<input type="hidden" id="artCover"/>
+									<div id="uploadCover" class="dropzone"></div>
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="artDesc">概要</label>
 								<div class="col-sm-7">
@@ -104,6 +118,7 @@
 	<#include "/admin/includes/footer.html"/>
 	<script src="/admin/js/editor/wangEditor.min.js"></script>
 	<script src="/admin/js/jquery.tag-editor.min.js"></script>
+	<script src="/admin/js/dropzone.min.js"></script>
 	<script type="text/javascript">
 	//百度音乐api: 参考https://www.jianshu.com/p/a6718b11fdf1
 	//百度音乐搜索api: http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=海阔天空
@@ -123,19 +138,21 @@
 	$.jsonp(u, function(data){
 		console.log(data);
 	}); */
-	var u = 'http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=877578';
-	$.jsonp(u, function(data){
-		console.log(data);
+	//var u = 'http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=877578';
+	//$.jsonp(u, function(data){
+		//console.log(data);
 		//需要在顶部加上标签： <meta name="referrer" content="never"> 才能播放
 		//$('#audio').attr('src', data.bitrate.file_link);
-	});
+	//});
+	Dropzone.autoDiscover = false;
 	$(function(){
 		resizeEditor();
-		initTagEditor();
 		initEditor();
 		$(window).resize(function(){
 			resizeEditor();
 		});
+		initTagEditor();
+		initDropZone();
 	});
 	function resizeEditor(){
 		$('#editor').height($(window).height() - 100);
@@ -167,6 +184,54 @@
 	    	var tag = $(this).text();
 	    	artTags.tagEditor('addTag', tag);
 	    });
+	}
+	//初始化封面导入
+	function initDropZone(){
+		var myDropzone = new Dropzone("#uploadCover", {
+			url: '/common/upload/editor.json',
+			method: 'post',
+			maxFiles: 1,
+			acceptedFiles: "image/*",
+			addRemoveLinks: true,
+			dictDefaultMessage: '<i class="w-e-icon-image"></i>&nbsp;选择封面',
+			dictRemoveFile: '移除封面',
+			dictInvalidFileType:'请选择封面',
+			init: function() {
+	            this.on("success", function(file, data) {
+	            	uploadedFile = file;
+	            	//yt.alert(data);
+	            	if(data.errno == 0){
+		            	var filepath = data.data[0];
+		            	$('#artCover').val(filepath);
+	            	}else{
+	            		if(uploadedFile.name){
+	         			   uploadedFile['handle'] = 1;//表示模态框隐藏时移除文件，但不删除服务器的文件
+	         			   myDropzone.removeFile(uploadedFile);
+	         		   }
+	            	}
+	            });
+	            this.on("removedfile", function(file) {
+	            	myDropzone.options.maxFiles = 1;
+	            	if(file.name === 'uploadedImg' || file.name === uploadedFile.name)
+	            		uploadedFile = {};
+	            	if(!file.handle){
+	            		var imgpath = $('#artCover').val();
+	            		$('#artCover').val('');
+	            		$.post('/common/file/del.json',{path:imgpath});
+	            	}
+	            });
+	        }
+	    });
+		//初始化dropzone图片
+		function initImg(uri){
+			var mockFile = { name: 'uploadedImg', accepted:true };
+			myDropzone.emit("addedfile", mockFile);
+			myDropzone.emit("thumbnail", mockFile, uri);
+			myDropzone.createThumbnailFromUrl(mockFile, uri);
+			myDropzone.emit("complete", mockFile);
+			myDropzone.options.maxFiles = 0;//myDropzone.options.maxFiles - 1;
+			uploadedFile = mockFile;
+		}
 	}
 	var E = window.wangEditor;
 	//初始化编辑器
