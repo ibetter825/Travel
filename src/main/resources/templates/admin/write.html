@@ -287,7 +287,8 @@
 	  				artSong: $artSong,
 	  				artCont: $artCont,
 	  				artDesc: $artDesc,
-	  				artTags: $artTags.join(',')
+	  				artTags: $artTags.join(','),
+	  				artCover: $('#artCover').val()
 	  			}, function(result){
 	  				console.log(result);
 	  			});
@@ -396,10 +397,22 @@
 		editor.customConfig.uploadImgMaxSize = 20 * 1024 * 1024
 		//可自定义filename
 		editor.customConfig.uploadFileName = 'file';
+		//上传图片出错时的提示
 		editor.customConfig.customAlert = function (info) {
 		    // info 是需要提示的内容
 		    layer.msg(info);
 		}
+		//上传图片返回后插入图片
+		editor.customConfig.uploadImgHooks = {
+		    customInsert: function (insertImg, result, editor) {
+		        if(result.errno == 0){
+		        	var imgs = result.data;
+		        	for(var i = 0; i < imgs.length; i++){
+		        		insertImg(imgs[i] + '?editor');//添加'?editor'用于区分是否为新添加的图片	
+		        	}
+		        }
+		    }
+	    }
 	    editor.create();
 	    E.save.init();//初始化菜单操作
 	    E.music.init();//初始化音乐菜单

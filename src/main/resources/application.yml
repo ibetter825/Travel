@@ -29,6 +29,8 @@ spring:
         encoding.charset: UTF-8
         encoding.enable: true
         encoding.force: true
+        multipart.maxFileSize: 10Mb #上传的单个文件大小限制，不限制值为-1
+        multipart.maxRequestSize: 1100Mb #单次请求的上传文件的总大小限制，不限制值为-1
     mvc: 
         static-path-pattern: /**
     resources: 
