@@ -277,6 +277,11 @@
 	  			var $artSong = $('#artSong').val();//背景歌曲，存放id(...)
 	  			var $artCont = editor.txt.html();
 	  			//var $artContTxt = editor.txt.text();//纯文本
+	  			var $artImgs = $('#'+editor.textElemId).find('img[editor]');//上传的图片
+	  			var imgUrlArr = [];
+	  			$.each($artImgs, function(){
+	  				imgUrlArr.push($(this).attr('src'));
+	  			});
 	  			var $artDesc = $('#artDesc').val();//概要，如果为空则取文章前200个数
 	  			var $artTags = $('#artTags').tagEditor('getTags')[0].tags;
 	  			//封面
@@ -288,7 +293,8 @@
 	  				artCont: $artCont,
 	  				artDesc: $artDesc,
 	  				artTags: $artTags.join(','),
-	  				artCover: $('#artCover').val()
+	  				artCover: $('#artCover').val(),
+	  				artImgs: imgUrlArr.join(',')
 	  			}, function(result){
 	  				console.log(result);
 	  			});
@@ -397,14 +403,16 @@
 		editor.customConfig.uploadImgMaxSize = 20 * 1024 * 1024
 		//可自定义filename
 		editor.customConfig.uploadFileName = 'file';
+		//上传图片后，修改了一下wangEditor的js在[<img src=] 位置加了一个editor的属性，用于区分是否为上传的图片
 		//上传图片出错时的提示
 		editor.customConfig.customAlert = function (info) {
 		    // info 是需要提示的内容
 		    layer.msg(info);
 		}
 		//上传图片返回后插入图片
-		editor.customConfig.uploadImgHooks = {
+		/* editor.customConfig.uploadImgHooks = {
 		    customInsert: function (insertImg, result, editor) {
+		    	console.log(insertImg)
 		        if(result.errno == 0){
 		        	var imgs = result.data;
 		        	for(var i = 0; i < imgs.length; i++){
@@ -412,7 +420,7 @@
 		        	}
 		        }
 		    }
-	    }
+	    } */
 	    editor.create();
 	    E.save.init();//初始化菜单操作
 	    E.music.init();//初始化音乐菜单

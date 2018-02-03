@@ -24,13 +24,13 @@ public class TaskExecutePool {
     private TaskThreadPoolProperties properties;
   
     @Bean  
-    public Executor tkTaskAsyncPool() {
+    public Executor taskAsyncPool() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(properties.getCorePoolSize());
         executor.setMaxPoolSize(properties.getMaxPoolSize());
         executor.setQueueCapacity(properties.getQueueCapacity());
         executor.setKeepAliveSeconds(properties.getKeepAliveSeconds());
-        executor.setThreadNamePrefix("TkExecutor-");
+        executor.setThreadNamePrefix("Executor-");
   
         // rejection-policy：当pool已经达到max size的时候，如何处理新任务  
         // CALLER_RUNS：不在新线程中执行任务，而是由调用者所在的线程来执行  
