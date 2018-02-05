@@ -120,9 +120,6 @@
 	<script src="/admin/js/jquery.tag-editor.min.js"></script>
 	<script src="/admin/js/dropzone.min.js"></script>
 	<script type="text/javascript">
-	//百度音乐api: 参考https://www.jianshu.com/p/a6718b11fdf1
-	//百度音乐搜索api: http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=海阔天空
-	//搜听api: method=baidu.ting.song.play&songid=877578
 	jQuery.jsonp = function (url, func) {
     	var callback = "jsonpCallback_" + new Date().getTime() + Math.floor(Math.random() * 1000000);
         url = url + (url.indexOf( '?' ) + 1 ? '&' : '?') + 'callback=' + callback;

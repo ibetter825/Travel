@@ -10,7 +10,7 @@
 	<div class="page-content">
 		<div class="page-header">
 			<div class="widget-box">
-				<form id="search-form" class="form-horizontal" role="form" onsubmit="return admin.search();">
+				<form id="searchForm" class="form-horizontal" role="form" onsubmit="return admin.search();">
 					<div class="widget-header header-color-blue">
 						<h6><i class="icon-search"></i>搜索</h6>
 						<div class="widget-toolbar">
@@ -46,8 +46,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="widget-main">
-							<table id="gridTable"></table>
+						<div class="widget-main" id="tableMain">
+							<table id="gridTable" style="height: 100%;"></table>
 							<div id="gridPager"></div>
 						</div>
 					</div>
@@ -80,7 +80,13 @@
 	
 	<!-- basic scripts -->
 	<#include "/admin/includes/footer.html"/>
+	<script src="/admin/js/jqGrid/jquery.jqGrid.min.js"></script>
+	<script src="/admin/js/jqGrid/i18n/grid.locale-cn.js"></script>
 	<script type="text/javascript">
+	$(function(){
+		//初始化grid
+		initGrid();
+	});
 	//打开文章新增页面
 	function add(){
 		open();
@@ -107,6 +113,75 @@
 		      content: '/admin/forward/write.html' + param
 		    });
 		$('#layui-layer'+index).find('.layui-layer-title').css({'background': '#307ecc', 'color': '#fff'});
+	}
+	//初始化表格数据
+	function initGrid(){
+		$('#gridTable').jqGrid({
+			url : '/admin/art/list.json',//config
+			mtype: 'POST',
+	        datatype : "json",
+	        jsonReader: {
+	            page: "pageNumber",   // json中代表当前页码的数据  
+	            total: "totalPages", // json中代表页码总数的数据  
+	            records: "total" // json中代表数据行总数的数据  
+	        },
+	        prmNames:  {page:'page', rows:'size', sort: 'sort', order: 'order', search: null, nd: null, npage:null},
+			colNames:['文章编号', '文章名称', '文章描述'],
+			colModel:[
+				{name:'artId', index:'artId', width: 100},
+				{name:'artTitle', index:'artTitle', width: 100},
+				{name:'artDesc', index:'artDesc', sortable: false}
+			], 
+			rownumbers: false,//显示行编号
+			viewrecords : true,
+			rowNum: 10,
+			rowList: [10,30,50,100],
+			pager : '#gridPager',
+			recordpos: 'center',
+			pagerpos: 'right',
+			recordtext: '显示 {0} - {1} 共 {2} 条',
+			pgtext : '第 {0} 页， 共 {1} 页',
+			loadtext: '正在请求数据...',
+			altRows: true,
+			//multiSort: true,
+			multiselect: true,
+			//multikey: "ctrlKey",
+	        multiboxonly: false,
+			editurl:'',
+			autowidth: true,
+			loadComplete : function() {
+				var _this = this;
+				setTimeout(function(){
+					updatePagerIcons(_this);
+					resizeGridHeight();
+				}, 0);
+			},
+			loadError : function(xhr, st, err) {
+				//app.error(xhr, st, err);
+		    }
+		});
+		//替换分页插件的按钮图标
+		function updatePagerIcons(table) {
+			var replacement = {
+				'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+				'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+				'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+				'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+			};
+			$('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+				var icon = $(this);
+				var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+				if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+			});
+		};
+		//修改表格大小
+		function resizeGridHeight(){
+			var sh = $('#searchForm').height();
+			var wh = $(window).height();
+			$('#tableMain').height(wh - 24 - sh - 112);
+			$('#tableMain').find('.ui-jqgrid-view').height(wh - 24 - sh - 112 - 55);
+			$('#tableMain').find('.ui-jqgrid-bdiv').height(wh - 24 - sh - 112 - 100);
+		}
 	}
 	</script>
 </body>
