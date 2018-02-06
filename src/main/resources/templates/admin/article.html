@@ -160,6 +160,22 @@
 				//app.error(xhr, st, err);
 		    }
 		});
+		$('#gridTable').jqGrid('navGrid', '#gridPager',
+		        {   //navbar options
+		            edit: false,
+		            editicon : 'icon-pencil blue',
+		            add: false,
+		            addicon : 'icon-plus-sign purple',
+		            del: false,
+		            delicon : 'icon-trash red',
+		            search: false,
+		            searchicon : 'icon-search orange',
+		            refresh: true,
+		            refreshicon : 'icon-refresh green',
+		            view: false,
+		            viewicon : 'icon-eye-open grey'
+		        }
+	    );
 		//替换分页插件的按钮图标
 		function updatePagerIcons(table) {
 			var replacement = {
@@ -182,6 +198,10 @@
 			$('#tableMain').find('.ui-jqgrid-view').height(wh - 24 - sh - 112 - 55);
 			$('#tableMain').find('.ui-jqgrid-bdiv').height(wh - 24 - sh - 112 - 100);
 		}
+	}
+	//关闭所有
+	function closeAll(){
+		layer.closeAll('iframe');
 	}
 	</script>
 </body>

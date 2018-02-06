@@ -270,30 +270,50 @@
     		post: function(){//提交数据到服务器
     			//验证数据有效性
 	  			//保存数据到后台去
-	  			var $artTitle = $('#artTitle').val();
-	  			var $artSong = $('#artSong').val();//背景歌曲，存放id(...)
-	  			var $artCont = editor.txt.html();
+	  			//文章标题验证 - START
+	  			var artTitle = $.trim($('#artTitle').val());
+	  			var re = /^\s*$/;
+	    		if(re.test(artTitle))
+	    			return layer.msg("请输入文章标题", {time:2000});
+	    		if(artTitle.replace(/[^\x00-\xff]/g, "01").length > 80)
+	    			return layer.msg("文章标题不能超过40个汉字", {time:2000});
+	  			//文章标题验证 - 
+	  			var artSong = $('#artSong').val();//背景歌曲，存放id(...)
+	  			var artCont = editor.txt.html();
 	  			//var $artContTxt = editor.txt.text();//纯文本
-	  			var $artImgs = $('#'+editor.textElemId).find('img[editor]');//上传的图片
-	  			var imgUrlArr = [];
+	  			var $artImgs = $('#'+editor.textElemId).find('img[editor]');//上传的图片,'editor'属性是修改了wangEditor的源码
+	  			var imgUrlArr = [];//该文章上传的图片
 	  			$.each($artImgs, function(){
 	  				imgUrlArr.push($(this).attr('src'));
 	  			});
-	  			var $artDesc = $('#artDesc').val();//概要，如果为空则取文章前200个数
-	  			var $artTags = $('#artTags').tagEditor('getTags')[0].tags;
+	  			var artDesc = $.trim($('#artDesc').val());//概要，如果为空则取文章前200个数
+	  			if(re.test(artDesc)){//如果概要为空，则截取文章前200个字
+	  				var artContTxt = editor.txt.text();
+	  				artDesc = artContTxt.substring(0, 200);
+	  			}
+	  			var artTags = $('#artTags').tagEditor('getTags')[0].tags;//文章标签
 	  			//封面
 	  			//存储的图片列表，如果封面不存在则取第一张图片
-	  			console.log($artTags.join(','));
 	  			$.post('/admin/art/save.json', {
-	  				artTitle: $artTitle,
-	  				artSong: $artSong,
-	  				artCont: $artCont,
-	  				artDesc: $artDesc,
-	  				artTags: $artTags.join(','),
+	  				artTitle: artTitle,
+	  				artSong: artSong,
+	  				artCont: artCont,
+	  				artDesc: artDesc,
+	  				artTags: artTags.join(','),
 	  				artCover: $('#artCover').val(),
 	  				artImgs: imgUrlArr.join(',')
 	  			}, function(result){
-	  				console.log(result);
+	  				layer.open({
+	  					title: '信息',
+	  					icon: 1,
+	  					skin: 'layer-skin',
+	  					content: result.msg,
+	  					yes: function(index, layero){
+						   if(result.success){//关闭页面，调用父页面
+								parent.closeAll();
+							}
+						}
+	  				});
 	  			});
     		}
     	};
