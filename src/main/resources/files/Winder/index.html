@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="google" content="notranslate" />
+    <title>追风者也 </title>
+    <meta name="keywords" content="追风者也, 旅行，摄影" />
+    <meta name="description" content="世界上每个角落都有人过着相似的人生" />
+    <meta name="author" content="ibetter825" />
+
+    <link rel="stylesheet" href="css/animate.min.css" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_525225_zzi24zalkvd6ajor.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <section class="logo"><img src="images/logo.png" alt="風"></section>
+    <section class="wall">
+        <img src="images/wall.jpg" alt="hello world">
+        <section class="shade"></section>
+    </section>
+    <section class="container">
+        <article class="article art-widget-1">
+            <section class="art-item animated fadeInLeft">
+                <img src="images/article.jpg" alt="hello world">
+            </section>
+            <section class="art-item">
+                <address>
+                    <span class="art-author">MR.Jack</span>
+                    <span class="art-date">九月 24, 2017</span>
+                </address>
+                <h1>
+                    <a href="detail.html">余生，我们一起吃饭余生，我们一起吃饭余生，我们一起吃饭</a>
+                </h1>
+                <p class="fenge"></p>
+                <p class="art-desc">在东南大学建筑学院副教授史永高的理解中，阿尔托的建筑是温软的，但并非甜腻。它们不断地否定自己来承纳时间，在这承纳中，自有一种因隐忍而来的力量。温软，终究是源于对生活的关顾，便也因而脆弱，远离永恒。那些温软的背后，是平常的生活，是始终相依的万物，是一个人对世界的爱。</p>
+                <p class="art-count">
+                    <i class="iconfont icon-view"></i>6178
+                    <i class="iconfont icon-like"></i>78
+                    <i class="iconfont icon-comment"></i>18
+                </p>
+            </section>
+        </article>
+        <article class="article art-widget-2">
+            <section class="art-item animated fadeInRight">
+                <img src="images/article.jpg" alt="hello world">
+            </section>
+            <section class="art-item">
+                <address>
+                    <span class="art-author">MR.Jack</span>
+                    <span class="art-date">九月 24, 2017</span>
+                </address>
+                <h1>余生，我们一起吃饭余生，我们一起吃饭余生，我们一起吃饭</h1>
+                <p class="fenge"></p>
+                <p class="art-desc">在东南大学建筑学院副教授史永高的理解中，阿尔托的建筑是温软的，但并非甜腻。它们不断地否定自己来承纳时间，在这承纳中，自有一种因隐忍而来的力量。温软，终究是源于对生活的关顾，便也因而脆弱，远离永恒。那些温软的背后，是平常的生活，是始终相依的万物，是一个人对世界的爱。</p>
+                <p class="art-count">
+                    <i class="iconfont icon-view"></i>6178
+                    <i class="iconfont icon-like"></i>78
+                    <i class="iconfont icon-comment"></i>18
+                </p>
+            </section>
+        </article>
+    </section>
+    <nav class="nav hide animated">
+        <ul>
+            <li><i class="iconfont icon-home"></i>首页</li>
+            <li><i class="iconfont icon-tag"></i>标签</li>
+            <li><i class="iconfont icon-tag"></i>文集</li>
+        </ul>
+    </nav>
+    <aside class="nav-btn">
+        <i class="iconfont icon-menu"></i>
+    </aside>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(function() {
+        let $window = $(window),
+            $wall = $('.wall'),
+            $nav = $('.nav'),
+            $navBtn = $('.nav-btn');
+        $wall.height($window.height());
+        $nav.height($window.height());
+        let $wallImg = $wall.find('img');
+        let prevX = 0,
+            prevY = 0;
+        if (OS.isPc) {
+            //PC端
+            //当鼠标在墙纸中移动时，顺便移动墙纸
+            $wall.mousemove(function(e) {
+                let top = parseFloat($wallImg.css('top'));
+                let left = parseFloat($wallImg.css('left'));
+                let dis = 0.2;
+                if (e.pageX < prevX)
+                    $wallImg.css('left', left + dis);
+                else
+                    $wallImg.css('left', left - dis);
+                if (e.pageY < prevY)
+                    $wallImg.css('top', top + dis);
+                else
+                    $wallImg.css('top', top - dis);
+                prevX = e.pageX;
+                prevY = e.pageY;
+            });
+        } else {
+            $wallImg.css('left', '-120%');
+        }
+
+        $window.scroll(function() {
+            if ($nav.hasClass('fadeOutLeft') || $nav.hasClass('fadeInLeft'))
+                $nav.removeClass('fadeInLeft').addClass('fadeOutLeft');
+        });
+        $navBtn.click(function() {
+            if ($nav.hasClass('hide'))
+                $nav.removeClass('hide');
+            if ($nav.hasClass('fadeInLeft'))
+                $nav.removeClass('fadeInLeft').addClass('fadeOutLeft');
+            else
+                $nav.removeClass('fadeOutLeft').addClass('fadeInLeft');
+        });
+    });
+
+    /*判断是否是PC*/
+    let OS = function() {
+        let ua = navigator.userAgent,
+            isWindowsPhone = /(?:Windows Phone)/.test(ua),
+            isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
+            isAndroid = /(?:Android)/.test(ua),
+            isFireFox = /(?:Firefox)/.test(ua),
+            isChrome = /(?:Chrome|CriOS)/.test(ua),
+            isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
+            isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+            isPc = !isPhone && !isAndroid && !isSymbian;
+        return {
+            isTablet: isTablet,
+            isPhone: isPhone,
+            isAndroid: isAndroid,
+            isPc: isPc
+        };
+    }();
+</script>
+
+</html>
