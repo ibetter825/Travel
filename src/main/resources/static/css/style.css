@@ -66,7 +66,28 @@ a,
 a:hover {
     text-decoration: none;
 }
-
+/*common*/
+.hide {
+    display: none;
+}
+.rotate {
+    animation: myrotate 5s infinite linear;
+    -webkit-animation: myrotate 5s infinite linear;
+    -moz-animation: myrotate 5s infinite linear;
+    -o-animation: myrotate 5s infinite linear;
+}
+@keyframes myrotate {
+    from {transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);}
+    to {transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);}
+}
 .logo {
     position: absolute;
     height: 50px;
@@ -92,8 +113,8 @@ a:hover {
 }
 
 .nav {
-    width: 200px;
-    background: rgba(30, 30, 30, 0.4);
+    width: 100%;
+    background: rgba(250, 250, 250, 0.9);
     position: fixed;
     top: 0;
     left: 0;
@@ -102,30 +123,27 @@ a:hover {
 
 .nav ul {
     margin-top: 200px;
+    text-align: center;
 }
 
 .nav li {
     box-sizing: border-box;
-    color: #fff;
-    font-size: 1.4rem;
+    color: #666666;
+    font-size: 1.8rem;
     line-height: 50px;
-    height: 50px;
-    padding: 0 10px;
     cursor: pointer;
-    text-align: center;
-    letter-spacing: 1rem;
-}
-
-.nav li:hover {
-    background: rgba(250, 150, 150, 0.2);
+    letter-spacing: 0.5rem;
+    display: inline;
+    padding: 0 10px;
 }
 
 .nav .iconfont {
-    font-size: 1.8rem;
-    position: relative;
-    top: 2px;
+    font-size: 2.0rem;
 }
 
+.nav li:hover {
+    color: #333333;
+}
 .nav-btn {
     position: absolute;
     top: 60px;
@@ -209,16 +227,32 @@ a:hover {
 
 .article .art-item:last-child {
     width: 520px;
-    height: 100%;
+    height: 90%;
     position: absolute;
-    right: 0;
-    top: 0;
+    top: 5%;
     box-sizing: border-box;
     border-width: 1px 1px 1px 0;
     border-style: solid;
     border-color: #EAEAEA;
     padding: 20px 30px;
     border-radius: 0 10px 10px 0;
+}
+
+.art-widget-1 .art-item:last-child {
+    right: 0;
+    border-width: 1px 1px 1px 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.art-widget-2 .art-item:first-child {
+    border-radius: 0 10px 10px 0;
+    margin-left: 520px;
+}
+
+.art-widget-2 .art-item:last-child {
+    left: 0;
+    border-width: 1px 0 1px 1px;
+    border-radius: 10px 0 0 10px;
 }
 
 .article .art-item address {
@@ -290,15 +324,63 @@ a:hover {
     width: 100%;
     height: 50px;
     border-bottom: 1px solid #F7F7F7;
-    background: #ECECEC;
+    background: #FFF;
 }
 
+.top li {
+    float: left;
+    color: #999999;
+    line-height: 50px;
+}
+.top ul::after {
+    clear: both;
+    display: block;
+    content: "";
+}
 .top .logo {
     position: static;
 }
 
 .top .logo img {
     width: 50%;
+}
+.top .iconfont {
+    cursor: pointer;
+    font-size: 2rem;
+}
+.top .music {
+    padding-left: 10px;
+}
+.top div {
+    width: 50px;
+    text-align: center;
+}
+.top .music .playing {
+    color: #16C2C2;
+}
+.top .music .iconfont:hover {
+    color: #16C2C2;
+}
+.top .opt {float: right;}
+.top .opt .iconfont:first-child:hover {
+    color: #EF6D57;
+}
+.top .opt .liked {
+    color: #EF6D57;
+}
+.top .art-title {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 0;
+    text-align: center;
+    color: #666666;
+}
+.top .art-title span {
+    position: relative;
+    line-height: 50px;
+    top: 0;
+    line-height: 50px;
 }
 
 .detail {
@@ -313,7 +395,7 @@ a:hover {
     font-size: 2.4rem;
     font-weight: bold;
     color: #333333;
-    padding: 50px 0 20px;
+    padding: 30px 0 20px;
 }
 
 .detail aside {
@@ -330,9 +412,9 @@ a:hover {
 }
 
 .detail .content {
-    padding: 50px 0;
+    padding: 30px 0;
     color: #333333;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 }
 
 .detail .comment h4 {
@@ -367,6 +449,7 @@ a:hover {
 /* 440分辨率以下（小于479px） */
 
 @media only screen and (max-width: 479px) {
+    /*index*/
     .logo {
         width: 30px;
         height: 30px;
@@ -403,6 +486,9 @@ a:hover {
         position: relative;
         width: 100%;
         padding: 20px 20px 80px 20px;
+    }
+    .art-widget-2 .art-item:first-child {
+        margin-left: 0;
     }
     .article .art-count {
         bottom: 40px;

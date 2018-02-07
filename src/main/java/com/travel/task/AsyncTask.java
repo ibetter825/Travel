@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import com.travel.bean.entity.Article;
+import com.travel.bean.entity.ArticleCount;
 import com.travel.bean.entity.Tag;
 import com.travel.bean.entity.TagArt;
+import com.travel.dao.mapper.ArticleCountMapper;
 import com.travel.dao.mapper.TagArtMapper;
 import com.travel.dao.mapper.TagMapper;
 import com.travel.utils.DateUtil;
@@ -17,9 +19,13 @@ public class AsyncTask {
 	private TagMapper tagMapper;
 	@Autowired
 	private TagArtMapper tagArtMapper;
+	@Autowired
+	private ArticleCountMapper articleCountMapper;
 	
 	@Async("taskAsyncPool")
-    public void doTaskArtTag(Article article) throws InterruptedException{
+    public void doTaskArtExtra(Article article) throws InterruptedException{
+		//初始化文章统计数据
+		articleCountMapper.insertSelective(new ArticleCount(article.getArtId()));
 		//这里面的操作可以放在数据库中，使用触发器
 		String artTags = article.getArtTags();
 		if(StringUtils.isEmpty(artTags)) return;

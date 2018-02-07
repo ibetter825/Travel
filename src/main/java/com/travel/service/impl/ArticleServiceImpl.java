@@ -31,12 +31,17 @@ public class ArticleServiceImpl implements ArticleService {
 		articleMapper.insertSelectiveUseGeneratedKeys(article);
 		System.err.println("生成的文章ID:" + article.getArtId());
 		try {
-			task.doTaskArtTag(article);//异步处理文章标签相关问题
+			task.doTaskArtExtra(article);//异步处理文章标签相关问题
 		} catch (InterruptedException e) {
 			//如果报错先不做处理
 			e.printStackTrace();
 		}
 		return article;
+	}
+	
+	@Override
+	public Article queryArticle(Long id) {
+		return articleMapper.selectByPrimaryKey(id);
 	}
 	
 	@Override
@@ -48,5 +53,4 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<Map<?, ?>> queryForMapList(QueryRq rq, PagerRq pager){
 		return articleMapper.selectListByRqAndPager(rq.getQrq(), pager);
 	}
-	
 }

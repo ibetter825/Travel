@@ -13,21 +13,21 @@
     <meta name="description" content="世界上每个角落都有人过着相似的人生" />
     <meta name="author" content="ibetter825" />
 
-    <link rel="stylesheet" href="/css/animate.min.css" />
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_525225_0wtbc8wx73mwvcxr.css" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_525225_zzi24zalkvd6ajor.css" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
-    <section class="logo"><img src="/images/logo.png" alt="風"></section>
+    <section class="logo"><img src="images/logo.png" alt="風"></section>
     <section class="wall">
-        <img src="/images/wall.jpg" alt="hello world">
+        <img src="images/wall.jpg" alt="hello world">
         <section class="shade"></section>
     </section>
     <section class="container">
-        <article class="article">
+        <article class="article art-widget-1">
             <section class="art-item animated fadeInLeft">
-                <img src="/images/article.jpg" alt="hello world">
+                <img src="images/article.jpg" alt="hello world">
             </section>
             <section class="art-item">
                 <address>
@@ -35,7 +35,7 @@
                     <span class="art-date">九月 24, 2017</span>
                 </address>
                 <h1>
-                    <a href="/1.html">余生，我们一起吃饭余生，我们一起吃饭余生，我们一起吃饭</a>
+                    <a href="detail.html">余生，我们一起吃饭余生，我们一起吃饭余生，我们一起吃饭</a>
                 </h1>
                 <p class="fenge"></p>
                 <p class="art-desc">在东南大学建筑学院副教授史永高的理解中，阿尔托的建筑是温软的，但并非甜腻。它们不断地否定自己来承纳时间，在这承纳中，自有一种因隐忍而来的力量。温软，终究是源于对生活的关顾，便也因而脆弱，远离永恒。那些温软的背后，是平常的生活，是始终相依的万物，是一个人对世界的爱。</p>
@@ -46,9 +46,9 @@
                 </p>
             </section>
         </article>
-        <article class="article">
-            <section class="art-item animated fadeInLeft">
-                <img src="/images/article.jpg" alt="hello world">
+        <article class="article art-widget-2">
+            <section class="art-item animated fadeInRight">
+                <img src="images/article.jpg" alt="hello world">
             </section>
             <section class="art-item">
                 <address>
@@ -66,10 +66,11 @@
             </section>
         </article>
     </section>
-    <nav class="nav animated">
+    <nav class="nav hide animated">
         <ul>
             <li><i class="iconfont icon-home"></i>首页</li>
             <li><i class="iconfont icon-tag"></i>标签</li>
+            <li><i class="iconfont icon-tag"></i>文集</li>
         </ul>
     </nav>
     <aside class="nav-btn">
@@ -94,7 +95,7 @@
             $wall.mousemove(function(e) {
                 let top = parseFloat($wallImg.css('top'));
                 let left = parseFloat($wallImg.css('left'));
-                let dis = 0.5;
+                let dis = 0.2;
                 if (e.pageX < prevX)
                     $wallImg.css('left', left + dis);
                 else
@@ -115,6 +116,8 @@
                 $nav.removeClass('fadeInLeft').addClass('fadeOutLeft');
         });
         $navBtn.click(function() {
+            if ($nav.hasClass('hide'))
+                $nav.removeClass('hide');
             if ($nav.hasClass('fadeInLeft'))
                 $nav.removeClass('fadeInLeft').addClass('fadeOutLeft');
             else

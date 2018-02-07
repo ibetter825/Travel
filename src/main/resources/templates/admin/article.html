@@ -202,6 +202,8 @@
 	//关闭所有
 	function closeAll(){
 		layer.closeAll('iframe');
+		//刷新
+		$('#gridTable').trigger('reloadGrid');
 	}
 	</script>
 </body>

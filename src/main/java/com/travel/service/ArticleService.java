@@ -15,6 +15,12 @@ public interface ArticleService {
 	 */
 	public Article save(Article article);
 	/**
+	 * 根据id查询文章
+	 * @param id
+	 * @return
+	 */
+	public Article queryArticle(Long id);
+	/**
 	 * 根据条件查询文章集合
 	 * @param rq
 	 * @return
