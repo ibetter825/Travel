@@ -32,7 +32,7 @@
     <article class="detail">
         <header>
             <h1>${(article.artTitle)!""}</h1>
-            <aside><span>十二月 18, 2017</span><span>阅读 <i id="scanCount">4228</i></span><span>字数 <i>1309</i></span><span>评论 <i id="comtCount">19</i></span><span>喜欢 <i id="likeCount">52</i></span></aside>
+            <aside id="artInfo"></aside>
         </header>
         <section class="content">
         	${(article.artCont)!""}
@@ -53,10 +53,14 @@
     $(function() {
 		$.post('/' + id + '/count.json', function(data){
 			if(data.success){
+				var artInfoArr = ['<span>十二月 18, 2017</span>'];
 				var count = data.data['count'];
-				$('#scanCount').html(Number(count['scanCount']) + 1);
-				$('#likeCount').html(count['likeCount']);
-				$('#comtCount').html(count['comtCount']);
+				//<span>阅读  4228</span><span>字数 1309</span><span>评论 19</span><span>喜欢 52</span>
+				artInfoArr.push('<span>阅读  '+ (Number(count['scanCount']) + 1) +'</span>');
+				artInfoArr.push('<span>字数 1309</span>');
+				artInfoArr.push('<span>评论 '+ count['comtCount'] +'</span>');
+				artInfoArr.push('<span>喜欢 '+ count['likeCount'] +'</span>');
+				$('#artInfo').html(artInfoArr.join(''));
 			}
 		},'json');
     });
