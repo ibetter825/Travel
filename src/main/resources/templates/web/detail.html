@@ -8,22 +8,23 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="google" content="notranslate" />
-    <title>風 | ${(article.artTitle)!""}</title>
+    <meta name="referrer" content="never">
+    <title>${(article.artTitle)!""}</title>
     <meta name="keywords" content="追风者也, 旅行，摄影" />
     <meta name="description" content="世界上每个角落都有人过着相似的人生" />
     <meta name="author" content="ibetter825" />
 
     <link rel="stylesheet" href="css/animate.min.css" />
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_525225_zzi24zalkvd6ajor.css" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_525225_zwd9ikl3hokihpvi.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
     <header class="top">
-        <section class="art-title"><span>${(article.artTitle)!""}</span></section>
+        <section class="art-title"><span class="hide">${(article.artTitle)!""}</span></section>
         <ul>
             <li class="logo"><img src="images/logo2.png" alt="風"></li>
-            <li class="music"><div class="rotate"><i class="iconfont icon-music playing"></i></div></li>
+            <li class="music"><div><i class="iconfont icon-music"></i></div></li>
             <li class="opt">
                 <div><i class="iconfont icon-liked liked"></i></div>
             </li>
@@ -46,23 +47,69 @@
             </ul>
         </section> -->
     </article>
+    <div class="hide2">
+		<audio id="audio" src="" autoplay="autoplay" controls="controls">您的浏览器不支持 audio 标签。</audio>
+	</div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script>
-	var id = ${(article.artId)!""};
+	var id = '${(article.artId)!""}';
+	jQuery.jsonp = function (url, func) {
+    	var callback = "jsonpCallback_" + new Date().getTime() + Math.floor(Math.random() * 1000000);
+        url = url + (url.indexOf( '?' ) + 1 ? '&' : '?') + 'callback=' + callback;
+	    window[callback] = function (data) {
+	        func(data);
+	        window[callback] = null;
+	    };
+	    script = document.createElement('script');
+	    script.setAttribute('src', url);
+	    document.body.appendChild(script);
+	};
     $(function() {
+    	//获取文章相关数据
 		$.post('/' + id + '/count.json', function(data){
 			if(data.success){
 				var artInfoArr = ['<span>十二月 18, 2017</span>'];
 				var count = data.data['count'];
 				//<span>阅读  4228</span><span>字数 1309</span><span>评论 19</span><span>喜欢 52</span>
-				artInfoArr.push('<span>阅读  '+ (Number(count['scanCount']) + 1) +'</span>');
-				artInfoArr.push('<span>字数 1309</span>');
-				artInfoArr.push('<span>评论 '+ count['comtCount'] +'</span>');
-				artInfoArr.push('<span>喜欢 '+ count['likeCount'] +'</span>');
+				artInfoArr.push('<span>阅读&nbsp;'+ count['scanCount'] +'</span>');
+				artInfoArr.push('<span>字数&nbsp;1309</span>');
+				artInfoArr.push('<span>评论&nbsp;'+ count['comtCount'] +'</span>');
+				artInfoArr.push('<span>喜欢&nbsp;'+ count['likeCount'] +'</span>');
 				$('#artInfo').html(artInfoArr.join(''));
 			}
 		},'json');
+		//播放歌曲
+		var song = '${(article.artSong)!""}';
+		if(song !== ''){
+			song = JSON.parse(song);
+			var u = 'http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=' + song[0];
+			$.jsonp(u, function(data){
+				//需要在顶部加上标签： <meta name="referrer" content="never"> 才能播放
+				$('#audio').attr('src', data.bitrate.file_link);
+				$('.music>div').addClass('rotate').find('.iconfont').addClass('playing').attr('title', song[1]);
+			});
+			//播放控制
+			$('.music').find('.iconfont').click(function(){
+				var audio = document.getElementById('audio'); 
+				if(audio.paused){
+					$('.music>div').addClass('rotate').find('.iconfont').addClass('playing');
+					audio.play();//audio.play();//播放  
+				}else{
+					$('.music>div').removeClass('rotate').find('.iconfont').removeClass('playing');
+					audio.pause();//暂停
+				}
+			});
+		}
+		//滚动事件
+		$(window).scroll(function(){
+			var top = $(window).scrollTop();
+			if(top > 90){
+				$('.art-title>span').fadeIn();
+			}else{
+				$('.art-title>span').fadeOut();
+			}
+		});
     });
 </script>
 

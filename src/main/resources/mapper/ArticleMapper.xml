@@ -42,4 +42,4 @@
     	</trim>
     	order by art_id desc
     </select>
-</mapper>  
+</mapper>

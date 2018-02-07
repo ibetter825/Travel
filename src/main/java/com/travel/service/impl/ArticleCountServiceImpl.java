@@ -24,4 +24,14 @@ public class ArticleCountServiceImpl implements ArticleCountService {
 	public ArticleCount query(Long artId) {
 		return countMapper.selectByPrimaryKey(artId);
 	}
+
+	@Override
+	public int modify(ArticleCount count) {
+		return countMapper.updateByPrimaryKeySelective(count);
+	}
+
+	@Override
+	public int modifyAuto(ArticleCount count) {
+		return countMapper.updateCountAuto(count);
+	}
 }

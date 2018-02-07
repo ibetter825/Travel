@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+<mapper namespace="com.travel.dao.mapper.ArticleCountMapper" >
+    <update id="updateCountAuto" parameterType="com.travel.bean.entity.ArticleCount">
+    	update article_count 
+    	<trim prefix="set" suffixOverrides=",">
+		  <if test="likeCount != null">like_count = like_count + #{likeCount},</if>
+		  <if test="comtCount != null">comt_count = comt_count + #{comtCount},</if>
+		  <if test="scanCount != null">scan_count = scan_count + #{scanCount},</if>
+		  <if test="shareCount != null">share_count = share_count + #{shareCount},</if>
+		</trim>
+		 where art_id = #{artId}
+    </update>
+</mapper>

@@ -387,7 +387,8 @@
     		add: function(btn){
     			var $artSong = $('#artSong');
     			var $select = $(btn).parent().siblings('select');
-    			$artSong.val($select.val());
+    			var arr = $select.val()[0].split(':-:');
+    			$artSong.val(JSON.stringify(arr));
     			E.music.close($select);
     		},
     		close: function(obj){
