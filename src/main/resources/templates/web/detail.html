@@ -15,7 +15,7 @@
     <meta name="author" content="ibetter825" />
 
     <link rel="stylesheet" href="css/animate.min.css" />
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_525225_zwd9ikl3hokihpvi.css" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_525225_a0yilmzdnsy30udi.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -26,7 +26,8 @@
             <li class="logo"><img src="images/logo2.png" alt="風"></li>
             <li class="music"><div><i class="iconfont icon-music"></i></div></li>
             <li class="opt">
-                <div><i class="iconfont icon-liked liked"></i></div>
+                <div id="like"><i class="iconfont icon-liked"></i></div>
+                <div id="share"><i class="iconfont icon-share"></i></div>
             </li>
         </ul>
     </header>
@@ -152,6 +153,8 @@
 				}
 			});
 		}
+		//点击喜欢按钮
+		initLike();
 		//滚动事件
 		$(window).scroll(function(){
 			var top = $(window).scrollTop();
@@ -162,6 +165,27 @@
 			}
 		});
     });
+    //点赞操作初始化以及事件绑定
+    function initLike(){
+    	var val = '[' + id + ']';
+    	var key = 'liked_articles';
+    	var likes = app.local(key);//如果值为1则为已喜欢，其他则为为喜欢
+    	if(likes !== null && likes.indexOf(val) > -1)
+	    	$('#like>i').addClass('liked');
+	    
+    	$('#like>i').click(function(){
+    		var $this = $(this);
+			if($this.hasClass('liked'))
+				return;
+			$this.addClass('liked');
+			likes = app.local(key);
+			if(likes !== null)
+				likes += val;
+			else
+				likes = val;
+			app.local(key, likes);		
+    	});
+    }
 </script>
 
 </html>
