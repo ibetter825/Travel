@@ -33,50 +33,101 @@
     <article class="detail">
         <header>
             <h1>${(article.artTitle)!""}</h1>
-            <aside id="artInfo"></aside>
+            <aside id="artInfo"><span>十二月 18, 2017</span></aside>
         </header>
         <section class="content">
         	${(article.artCont)!""}
         </section>
-        <!-- <section class="comment">
+        <section class="comment">
             <h4>评论列表</h4>
             <ul>
                 <li>
-                    <header></header>
+                    <header class="comt-info">
+                    	<div class="comt-info-item">
+                    		<img class="avatar" src="images/logo2.png"/>
+                    	</div>
+                    	<div class="comt-info-item">
+                    		回复
+                    	</div>
+                    	<div class="comt-info-item">
+                    		<p class="comt-user">唐僧洗头用飘柔</p>
+                    		<p class="comt-time">2018/01/31 12:12</p>
+                    	</div>
+                    </header>
+                    <section class="comt-cont">
+                    	<p>大风起兮云飞扬，安得猛士兮守四方</p>
+                    </section>
+                    <ol>
+		                <li>
+		                    <header class="comt-info">
+		                    	<div class="comt-info-item">
+		                    		<img class="avatar" src="images/logo2.png"/>
+		                    	</div>
+		                    	<div class="comt-info-item">
+		                    		回复
+		                    	</div>
+		                    	<div class="comt-info-item">
+		                    		<p class="comt-user">唐僧洗头用飘柔</p>
+		                    		<p class="comt-time">2018/01/31 12:12</p>
+		                    	</div>
+		                    </header>
+		                    <section class="comt-cont">
+		                    	<p>什么时候再加紧真心的煎熬才能我的像做菜一样粗茶淡饭也会也不要再多的惆怅再多</p>
+		                    </section>
+		                </li>
+		            </ol>
                 </li>
             </ul>
-        </section> -->
+        </section>
     </article>
+    <!-- 评论表单 -->
+    <!-- <section class="art-comt-form">
+       <form>
+       		<ul>
+       			<li>
+       				<label>用户名</label>
+       				<input type="text" name="username"/>
+       			</li>
+       			<li>
+       				<label>邮&emsp;箱</label>
+       				<input type="email" name="email">
+       			</li>
+       			<li>
+       				<label>内&emsp;容</label>
+       				<textarea></textarea>
+       			</li>
+       			<li>
+       				<button>提交</button>
+       			</li>
+       		</ul>
+       </form>
+      </section> -->
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
     <div class="hide2">
 		<audio id="audio" src="" autoplay="autoplay" controls="controls">您的浏览器不支持 audio 标签。</audio>
 	</div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="js/app.js"></script>
 <script>
 	var id = '${(article.artId)!""}';
-	jQuery.jsonp = function (url, func) {
-    	var callback = "jsonpCallback_" + new Date().getTime() + Math.floor(Math.random() * 1000000);
-        url = url + (url.indexOf( '?' ) + 1 ? '&' : '?') + 'callback=' + callback;
-	    window[callback] = function (data) {
-	        func(data);
-	        window[callback] = null;
-	    };
-	    script = document.createElement('script');
-	    script.setAttribute('src', url);
-	    document.body.appendChild(script);
-	};
     $(function() {
     	//获取文章相关数据
 		$.post('/' + id + '/count.json', function(data){
 			if(data.success){
-				var artInfoArr = ['<span>十二月 18, 2017</span>'];
+				var artInfoArr = [];
 				var count = data.data['count'];
 				//<span>阅读  4228</span><span>字数 1309</span><span>评论 19</span><span>喜欢 52</span>
 				artInfoArr.push('<span>阅读&nbsp;'+ count['scanCount'] +'</span>');
 				artInfoArr.push('<span>字数&nbsp;1309</span>');
 				artInfoArr.push('<span>评论&nbsp;'+ count['comtCount'] +'</span>');
 				artInfoArr.push('<span>喜欢&nbsp;'+ count['likeCount'] +'</span>');
-				$('#artInfo').html(artInfoArr.join(''));
+				$('#artInfo').append(artInfoArr.join(''));
 			}
 		},'json');
 		//播放歌曲
@@ -84,7 +135,7 @@
 		if(song !== ''){
 			song = JSON.parse(song);
 			var u = 'http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=' + song[0];
-			$.jsonp(u, function(data){
+			app.jsonp(u, function(data){
 				//需要在顶部加上标签： <meta name="referrer" content="never"> 才能播放
 				$('#audio').attr('src', data.bitrate.file_link);
 				$('.music>div').addClass('rotate').find('.iconfont').addClass('playing').attr('title', song[1]);

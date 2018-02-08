@@ -89,6 +89,11 @@ a:hover {
     -moz-transform: rotate(360deg);
     -o-transform: rotate(360deg);}
 }
+.art-comt-form {
+	box-sizing: border-box;
+	padding: 0 20px;
+}
+
 .logo {
     position: absolute;
     height: 50px;
@@ -160,7 +165,54 @@ a:hover {
     color: #fff;
     font-size: 2rem;
 }
+/* editor-start */
+/* table 样式 */
+.detail .content table {
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+.detail .content table td,
+.detail .content table th {
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 3px 5px;
+}
+.detail .content table th {
+  border-bottom: 2px solid #ccc;
+  text-align: center;
+}
 
+/* blockquote 样式 */
+.detail .content blockquote {
+  display: block;
+  border-left: 8px solid #d0e5f2;
+  padding: 5px 10px;
+  margin: 10px 0;
+  line-height: 1.4;
+  font-size: 100%;
+  background-color: #f1f1f1;
+}
+
+/* code 样式 */
+.detail .content code {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  padding: 3px 5px;
+  margin: 0 3px;
+}
+.detail .content pre code {
+  display: block;
+}
+
+/* ul ol 样式 */
+.detail .content ul, ol {
+  margin: 10px 0 10px 20px;
+}
+/* editor-end */
+/* index */
 .wall img {
     width: 120%;
     text-align: center;
@@ -344,6 +396,8 @@ a:hover {
 
 .top .logo img {
     width: 50%;
+    height: 50%;
+    margin: 25%;
 }
 .top .iconfont {
     cursor: pointer;
@@ -416,18 +470,68 @@ a:hover {
 .detail .content {
     padding: 30px 0;
     color: #333333;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 }
-
+.detail .content img {
+	max-width: 100%;
+}
+.detail .content p {
+	margin: 5px 0;
+	line-height: 24px;
+}
 .detail .comment h4 {
     margin-bottom: 20px;
 }
 
-.detail .comment header {
-    height: 100px;
+.detail .comt-info {
+    
 }
-
-
+.detail .comt-info-item {
+	height: 50px;
+}
+.detail .comt-info-item:first-child {
+	float: left;
+	width: 50px;
+	text-align: center;
+}
+.detail .comt-info-item:nth-child(2) {
+	float: right;
+	width: 50px;
+	height: 40px;
+	padding: 5px;
+	text-align: right;
+}
+.detail .comt-info-item:last-child {
+	margin: 0 50px;
+	height: 40px;
+	padding: 5px 10px;
+}
+.detail .comt-info-item .avatar {
+	width: 90%;
+	height: 90%;
+	margin: 5%;
+	border-radius: 50%;
+}
+.detail .comt-info-item .comt-user {
+	font-size: 1.4rem;
+	line-height: 24px;
+	color: #EF6D57;
+}
+.detail .comt-info-item .comt-time {
+	font-size: 1.2rem;
+	color: #999;
+}
+.detail .comt-cont {
+	padding: 5px 10px;
+	color: #333;
+	font-size: 1.3rem;
+}
+.detail .comment ul {
+	border-bottom: 1px solid #EEEEEE;
+}
+.detail .comment ol {
+	margin-top: 10px;
+}
 /* 1280分辨率以上（大于1200px） */
 
 @media screen and (min-width:1200px) {}

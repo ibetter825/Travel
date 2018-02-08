@@ -36,10 +36,6 @@ public class ArticleController extends WebBaseController {
 		}
 		Map<String, Article> model = Maps.newHashMap();
 		model.put("article", article);
-		ArticleCount count = new ArticleCount();
-		count.setArtId(id);
-		count.setScanCount(1);
-		articleCountService.modifyAuto(count);//修改文章的浏览量
 		return new ModelAndView(getView("detail"), model);
 	}
 	

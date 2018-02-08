@@ -41,7 +41,14 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Override
 	public Article queryArticle(Long id) {
-		return articleMapper.selectByPrimaryKey(id);
+		Article article = articleMapper.selectByPrimaryKey(id);
+		try {
+			task.doTaskArtCountExtra(article);//异步处理文章标签相关问题
+		} catch (InterruptedException e) {
+			//如果报错先不做处理
+			e.printStackTrace();
+		}
+		return article;
 	}
 	
 	@Override

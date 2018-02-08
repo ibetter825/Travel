@@ -22,6 +22,11 @@ public class AsyncTask {
 	@Autowired
 	private ArticleCountMapper articleCountMapper;
 	
+	/**
+	 * 新增文章时的额外操作
+	 * @param article
+	 * @throws InterruptedException
+	 */
 	@Async("taskAsyncPool")
     public void doTaskArtExtra(Article article) throws InterruptedException{
 		//初始化文章统计数据
@@ -40,5 +45,17 @@ public class AsyncTask {
 			//添加文章与tag的关联
 			tagArtMapper.insert(new TagArt(tag.getTagNm(), article.getArtId()));//添加失败后怎么办，先不管
 		}
+    }
+	/**
+	 * 浏览文章时的额外操作
+	 * @param article
+	 * @throws InterruptedException
+	 */
+	@Async("taskAsyncPool")
+    public void doTaskArtCountExtra(Article article) throws InterruptedException{
+		ArticleCount count = new ArticleCount();
+		count.setArtId(article.getArtId());
+		count.setScanCount(1);
+		articleCountMapper.updateCountAuto(count);//修改文章的浏览量
     }
 }
