@@ -183,7 +183,9 @@
 				likes += val;
 			else
 				likes = val;
-			app.local(key, likes);		
+			app.local(key, likes);
+			//请求后台添加喜欢数量
+			$.post('/art/count.json', {artId: id, likeCount: 1});
     	});
     }
 </script>
