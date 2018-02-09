@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
-<mapper namespace="com.travel.dao.mapper.ArticleMapper" >
+<mapper namespace="com.winder.dao.mapper.ArticleMapper" >
 	<sql id="baseColumnList">
 		art_id artId, art_title artTitle, art_desc artDesc, author_id authorId, add_time addTime, edit_time editTime, art_status artStatus, art_cont artCont, art_tags artTags, art_imgs artImgs, art_cover artCover, art_song artSong
 	</sql>

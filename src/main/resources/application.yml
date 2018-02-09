@@ -3,7 +3,7 @@
 properties:
     #上传文件根目录 打包成jar的话不能上传到项目根目录 因此需要将文件上传到磁盘其他地方 然后在soring.mv中将此目录配置进去
     #存放上传文件的根目录
-    uploadRootPath: D:/temp/travel/upload
+    uploadRootPath: D:/temp/winder/upload
     #存放上传图片的跟目录
     uploadImagePath: /images
 #框架需要的属性配置
@@ -14,14 +14,14 @@ server:
 # 配置 Logback
 logging:
     #path: /D:/logs 
-    file: D:/logs/Travel/springboot.log 
+    file: D:/logs/Winder/springboot.log 
     config: classpath:logback.xml # location of config file (default classpath:logback.xml for logback) 
     #level.*= # levels for loggers, e.g. "logging.level.org.springframework=DEBUG" (TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF)
 # 配置mybatis
 mybatis:
     config: classpath:mybatis-config.xml #本来不需要这个配置文件，但是插件需要在手动配置sqlSessionFactory时设置，自动配置时还没找到方法
     mapperLocations: classpath*:mapper/*.xml
-    typeAliasesPackage: com.travel.bean.entity
+    typeAliasesPackage: com.winder.bean.entity
 # 配置编码及JSP支持
 spring:
     # HTTP ENCODING 
