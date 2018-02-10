@@ -94,7 +94,7 @@ a:hover {
 	padding: 0 20px;
 }
 
-.logo {
+.index .logo {
     position: absolute;
     height: 50px;
     width: 50px;
@@ -107,7 +107,7 @@ a:hover {
     z-index: 1990;
 }
 
-.logo img {
+.index .logo img {
     width: 100%;
 }
 
@@ -154,16 +154,13 @@ a:hover {
     position: absolute;
     top: 60px;
     right: 70px;
-    width: 30px;
-    height: 30px;
     text-align: center;
-    line-height: 30px;
     cursor: pointer;
 }
 
 .nav-btn .iconfont {
     color: #fff;
-    font-size: 2rem;
+    font-size: 3rem;
 }
 /* editor-start */
 /* table 样式 */
@@ -392,6 +389,8 @@ a:hover {
 }
 .top .logo {
     position: static;
+    height: 50px;
+    width: 50px;
 }
 
 .top .logo img {
@@ -547,34 +546,50 @@ a:hover {
 @media screen and (min-width: 960px) and (max-width: 1199px) {}
 
 
-/* 880分辨率（大于768px，小于959px） */
-
-@media screen and (min-width: 768px) and (max-width: 959px) {}
-
-
-/* 720分辨率（大于480px，小于767px） */
-
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
-
-
 /* 440分辨率以下（小于479px） */
 
-@media only screen and (max-width: 479px) {
+@media screen and (max-width: 480px) {
     /*index*/
+    .index .logo {
+    	height: 30px;
+    	width: 30px;
+    	top: 30px;
+    	left: 40px;
+    }
+    .nav-btn {
+    	right: 40px;
+    	top: 40px;
+    }
+    .nav-btn .iconfont{
+    	font-size: 1.8rem;
+    }
+    /* detail */
    	.top {
    		border-bottom: none;
    		border-top: 1px solid #F7F7F7;
+   		top: inherit;
+    	bottom: 0;
    	}
-    .nav-btn {
-        top: 45px;
-        right: 30px;
+    .detail {
+    	margin-top: 0;
     }
-    .wall img {
+    .detail h1 {
+    	padding-top: 20px;
+    }
+    .top .art-title {
+    	display: none;
+    }
+}
+/* 分辨率小于768px） */
+
+@media screen and (max-width: 768px) {
+	.wall img {
         width: auto;
         height: 120%;
     }
     .wall .shade {
         display: none;
+    }
     }
     .container {
         max-width: 100%;
@@ -601,19 +616,5 @@ a:hover {
     }
     .article .art-count {
         bottom: 40px;
-    }
-    .top {
-    	top: inherit;
-    	bottom: 0;
-    }
-    /* detail */
-    .detail {
-    	margin-top: 0;
-    }
-    .detail h1 {
-    	padding-top: 20px;
-    }
-    .top .art-title {
-    	display: none;
     }
 }
