@@ -590,7 +590,6 @@ a:hover {
     .wall .shade {
         display: none;
     }
-    }
     .container {
         max-width: 100%;
         margin: 50px 0 0 0;
@@ -616,5 +615,12 @@ a:hover {
     }
     .article .art-count {
         bottom: 40px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .container {
+        max-width: 1200px;
+        margin: 100px auto;
     }
 }
