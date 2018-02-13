@@ -1,10 +1,7 @@
 package com.winder.bean.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "user_info")
 public class UserInfo extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	
+	@Id
 	private Integer userId;
 	private String userAvatar;
 	private String userIntro;
@@ -27,10 +24,7 @@ public class UserInfo extends BaseEntity {
 	private Long regTime;
 	private Short errCount;
 	private Long stopTime;
-	private User user;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	public Integer getUserId() {
 		return userId;
 	}
@@ -90,12 +84,5 @@ public class UserInfo extends BaseEntity {
 	}
 	public void setStopTime(Long stopTime) {
 		this.stopTime = stopTime;
-	}
-	@OneToOne(mappedBy="info", optional=false)
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 }

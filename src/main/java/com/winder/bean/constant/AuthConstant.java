@@ -86,4 +86,8 @@ public class AuthConstant {
 	 * 登录账号出错
 	 */
 	public final static String WRONG_USER_ACCOUNT_MSG = "只能使用手机或者邮箱登录";
+	/**
+	 * 后台路径根目录
+	 */
+	public final static String AUTH_ADMIN_ROOR_PATH = "/admin";
 }

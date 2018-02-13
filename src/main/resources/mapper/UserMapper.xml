@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+<mapper namespace="com.winder.dao.mapper.UserMapper" >
+	<resultMap id="baseResultMap" type="com.winder.bean.dto.UserDto">
+		<id column="user_id" property="userId" jdbcType="INTEGER"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+		<result column="user_salt" property="userSalt" jdbcType="VARCHAR"/>
+		<result column="user_phone" property="userPhone" jdbcType="BIGINT"/>
+		<result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+		<result column="user_status" property="userStatus" jdbcType="SMALLINT"/>
+		<result column="user_avatar" property="userAvatar" jdbcType="VARCHAR"/>
+		<result column="user_intro" property="userIntro" jdbcType="VARCHAR"/>
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+		<result column="user_sex" property="userSex" jdbcType="SMALLINT"/>
+		<result column="login_time" property="loginTime" jdbcType="BIGINT"/>
+		<result column="login_ip" property="loginIp" jdbcType="VARCHAR"/>
+		<result column="reg_time" property="regTime" jdbcType="BIGINT"/>
+		<result column="err_count" property="errCount" jdbcType="SMALLINT"/>
+		<result column="stop_time" property="stopTime" jdbcType="BIGINT"/>
+	</resultMap>
+	<sql id="baseColumnList">
+		user_id,user_name,user_pwd,user_salt,user_phone,user_email,user_status,user_avatar,user_intro,nick_name,user_sex,login_time,login_ip,reg_time,err_count,stop_time
+	</sql>
+    <select id="selectUserWithInfoByRq" parameterType="java.util.Map" resultMap="baseResultMap">
+    	select <include refid="baseColumnList"/> from article 
+    	<trim prefix="WHERE" prefixOverrides="AND|OR">
+    		<if test="userId != null and userId != ''">
+	    		user_id = #{userId, jdbcType=INTEGER}
+	    	</if>
+	    	<if test="userName != null and userName != ''">
+	    		user_name = #{userName, jdbcType=VARCHAR}
+	    	</if>
+	    	<if test="userPhone != null and userPhone != ''">
+	    		user_phone = #{userPhone, jdbcType=BIGINT}
+	    	</if>
+	    	<if test="userEmail != null and userEmail != ''">
+	    		user_email = #{userEmail, jdbcType=VARCHAR}
+	    	</if>
+	    	<if test="userStatus != null and userStatus != ''">
+	    		user_status = #{userStatus, jdbcType=SMALLINT}
+	    	</if>
+	    	<if test="userStatus == null or userStatus == ''">
+	    		user_status <![CDATA[<>]]> -1
+	    	</if>
+    	</trim>
+    </select>
+</mapper>

@@ -6,6 +6,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,11 @@ public class GlobalExceptionHandler {
     		else{
     	        ModelAndView mav = new ModelAndView();
     	        if(e instanceof MyAuthenticationException){
-    	        	mav.setViewName("/web/sign");
+    	        	String view = ((MyAuthenticationException) e).getView();
+    	        	if(StringUtils.isNotEmpty(view))
+    	        		mav.setViewName(view);
+    	        	else
+    	        		mav.setViewName("/web/sign");
     	        }else{
 	    	        mav.addObject("exception", e);
 	    	        mav.addObject("url", req.getRequestURL());

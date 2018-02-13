@@ -16,6 +16,8 @@ import javax.persistence.Table;
 public class User extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userId;
 	private String userName;
 	private String userPwd;
@@ -23,10 +25,7 @@ public class User extends BaseEntity {
 	private Long userPhone;
 	private String userEmail;
 	private Short userStatus;
-	private UserInfo info;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getUserId() {
 		return userId;
 	}
@@ -68,11 +67,5 @@ public class User extends BaseEntity {
 	}
 	public void setUserStatus(Short userStatus) {
 		this.userStatus = userStatus;
-	}
-	public UserInfo getInfo() {
-		return info;
-	}
-	public void setInfo(UserInfo info) {
-		this.info = info;
 	}
 }

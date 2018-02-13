@@ -9,7 +9,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.winder.bean.constant.AuthConstant;
+import com.winder.bean.entity.User;
 import com.winder.context.SessionContextHolder;
+import com.winder.service.UserService;
 import com.winder.utils.DateUtil;
 import com.winder.utils.Md5Util;
 import com.winder.utils.SecretUtil;
@@ -22,7 +24,9 @@ import com.winder.utils.WebUtil;
  *
  */
 public class PreposeInterceptor implements HandlerInterceptor {
-
+	@Autowired
+	private UserService userService;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -30,7 +34,7 @@ public class PreposeInterceptor implements HandlerInterceptor {
 		System.err.println("进入到前置拦截器中");
 		//如果存在cookie SESSIONID 则表示已经登录   就从缓存中取出数据
 		//如果缓存中没有，则从数据库中查询
-		/*Cookie cookie =	WebUtil.getCookieByName(request, AuthConstant.COOKIE_USER_INFO);
+		Cookie cookie =	WebUtil.getCookieByName(request, AuthConstant.COOKIE_USER_INFO);
 		if(cookie != null){
 			String userLoginInfo = SecretUtil.decrypt(cookie.getValue());
 			//userId+"@"+time+"@"+maxAge+"@"+Md5Util.md5(userId+"@"+pwd+"@"+salt+"@"+time+"@"+maxAge
@@ -42,7 +46,7 @@ public class PreposeInterceptor implements HandlerInterceptor {
 				long rtime = DateUtil.getDateByTime();
 				String cookieUserinfo = userValues[3];
 				
-				TkUser user = userService.queryById(userId);
+				User user = userService.queryById(userId);
 				if(user != null){
 					String dbPwd = user.getUserPwd();
 					String dbSalt = user.getUserSalt();
@@ -61,7 +65,7 @@ public class PreposeInterceptor implements HandlerInterceptor {
 					}
 				}
 			}
-		}*/
+		}
 		return true;
 	}
 

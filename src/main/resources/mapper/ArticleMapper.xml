@@ -17,13 +17,13 @@
 	    		clz_id = #{clzId, jdbcType=INTEGER}
 	    	</if>
 	    	<if test="userId != null and userId != ''">
-	    		and user_id = #{userId, jdbcType=INTEGER}
+	    		user_id = #{userId, jdbcType=INTEGER}
 	    	</if>
 	    	<if test="artState != null and artState != ''">
-	    		and art_state = #{artState, jdbcType=INTEGER}
+	    		art_state = #{artState, jdbcType=INTEGER}
 	    	</if>
 	    	<if test="artState == null or artState == ''">
-	    		and art_state <![CDATA[<>]]> -1
+	    		art_state <![CDATA[<>]]> -1
 	    	</if>
     	</trim>
     </select>
@@ -31,13 +31,13 @@
     	select <include refid="baseColumnList"/> from article 
     	<trim prefix="WHERE" prefixOverrides="AND|OR">
 	    	<if test="rq.authorId != null and rq.authorId != ''">
-	    		and author_id = #{rq.authorId, jdbcType=INTEGER}
+	    		author_id = #{rq.authorId, jdbcType=INTEGER}
 	    	</if>
 	    	<if test="rq.artStatus != null and rq.artStatus != ''">
-	    		and art_status = #{rq.artStatus, jdbcType=INTEGER}
+	    		art_status = #{rq.artStatus, jdbcType=INTEGER}
 	    	</if>
 	    	<if test="rq.artStatus == null or rq.artStatus == ''">
-	    		and art_status <![CDATA[<>]]> -1
+	    		art_status <![CDATA[<>]]> -1
 	    	</if>
     	</trim>
     	order by art_id desc

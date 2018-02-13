@@ -15,5 +15,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Permission {
-	
+	/**
+	 * 该方法需要的权限值
+	 * 在后台登录中使用
+	 * @return
+	 */
+	String value() default "";
 }
